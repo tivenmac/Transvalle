@@ -3,13 +3,13 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Vista.GestionBuses;
+package vista.GestionBuses;
 
 /**
  *
  * @author Estibenson
  */
-public class Gestionar_buses extends javax.swing.JInternalFrame {
+public class Gestionar_buses extends javax.swing.JFrame {
 
     /**
      * Creates new form Gestionar_buses
