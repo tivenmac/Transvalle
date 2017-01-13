@@ -21,6 +21,7 @@ public class DocumentosBus extends javax.swing.JFrame {
      */
     public DocumentosBus() {
         initComponents();
+        this.setLocationRelativeTo(null);
     }
 
     /**

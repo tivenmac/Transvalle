@@ -16,6 +16,7 @@ public class EditarBus extends javax.swing.JFrame {
      */
     public EditarBus() {
         initComponents();
+        this.setLocationRelativeTo(null);
     }
 
     /**

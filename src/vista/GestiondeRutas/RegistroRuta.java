@@ -9,13 +9,14 @@ package vista.GestiondeRutas;
  *
  * @author ESTIBENSON MAESTRE
  */
-public class RegistroRuta extends javax.swing.JInternalFrame {
+public class RegistroRuta extends javax.swing.JFrame {
 
     /**
      * Creates new form RegistroRuta
      */
     public RegistroRuta() {
         initComponents();
+        this.setLocationRelativeTo(null);
     }
 
     /**

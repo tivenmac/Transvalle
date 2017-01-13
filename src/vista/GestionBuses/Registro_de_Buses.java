@@ -16,6 +16,7 @@ public class Registro_de_Buses extends javax.swing.JFrame {
      */
     public Registro_de_Buses() {
         initComponents();
+        this.setLocationRelativeTo(null);
     }
 
     /**

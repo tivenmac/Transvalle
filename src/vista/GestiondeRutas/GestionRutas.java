@@ -139,13 +139,14 @@ public class GestionRutas extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(37, 37, 37)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton4)
-                    .addComponent(jLabel1)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(jRadioButton1)
-                        .addComponent(jRadioButton2)))
+                        .addComponent(jRadioButton2))
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jButton4)
+                        .addComponent(jLabel1)
+                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 266, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 74, Short.MAX_VALUE)
@@ -161,7 +162,9 @@ public class GestionRutas extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnRutaIrAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRutaIrAgregarActionPerformed
-        
+        GestionRutas rutas = new GestionRutas();
+        rutas.setVisible(true);
+        this.setVisible(false);
     }//GEN-LAST:event_btnRutaIrAgregarActionPerformed
 
     private void btnRutaIrAConsultarRutaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRutaIrAConsultarRutaActionPerformed
@@ -172,7 +175,7 @@ public class GestionRutas extends javax.swing.JFrame {
         int n = JOptionPane.showOptionDialog(this, "Seguro desea eliminar la Ruta?", "Eliminar Ruta", JOptionPane.YES_NO_CANCEL_OPTION, WIDTH, null,opcionesEliminarRuta, opcionesEliminarRuta[1]);
         if (n==0) {
             // eliminar conductor
-            JOptionPane.showMessageDialog(this, "Ruta eliminado exitosamente");
+            JOptionPane.showMessageDialog(this, "Ruta eliminada exitosamente");
         }
     }//GEN-LAST:event_btnRutaEliminarActionPerformed
 
