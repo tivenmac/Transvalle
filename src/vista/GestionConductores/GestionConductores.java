@@ -5,17 +5,22 @@
  */
 package vista.GestionConductores;
 
+import static java.awt.image.ImageObserver.WIDTH;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author Estibenson
  */
 public class GestionConductores extends javax.swing.JFrame {
 
+    Object[] opcionesEliminarCond = {"Si, Eliminar Conductor","No, Cancelar"};
     /**
      * Creates new form GestionConductores
      */
     public GestionConductores() {
         initComponents();
+        this.setLocationRelativeTo(null);
     }
 
     /**
@@ -28,8 +33,6 @@ public class GestionConductores extends javax.swing.JFrame {
     private void initComponents() {
 
         jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
         jScrollPane2 = new javax.swing.JScrollPane();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
@@ -38,14 +41,17 @@ public class GestionConductores extends javax.swing.JFrame {
         jRadioButton1 = new javax.swing.JRadioButton();
         jRadioButton2 = new javax.swing.JRadioButton();
         jLabel3 = new javax.swing.JLabel();
-        jButton4 = new javax.swing.JButton();
-        jButton5 = new javax.swing.JButton();
+        btnCondSalir = new javax.swing.JButton();
+        btnCondEditar = new javax.swing.JButton();
+        btnCondVerTodos = new javax.swing.JButton();
+        btnCondEliminar = new javax.swing.JButton();
+        btnCondIrARegNuevo = new javax.swing.JButton();
+        btnCondBuscar1 = new javax.swing.JButton();
 
         jButton1.setText("jButton1");
 
         setTitle("Gestión de Conductores");
-
-        jButton3.setText("salir");
+        getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -57,12 +63,24 @@ public class GestionConductores extends javax.swing.JFrame {
             new String [] {
                 "ID_Persona", "No. doc", "Nombre", "Apellido", "Dirección", "FechaNacimiento"
             }
-        ));
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
         jScrollPane1.setViewportView(jTable1);
 
         jScrollPane2.setViewportView(jScrollPane1);
 
+        getContentPane().add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 180, 880, 230));
+        getContentPane().add(jTextField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 110, 172, 40));
+
         jLabel2.setText("Buscar valor:");
+        getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 120, 100, 20));
 
         jRadioButton1.setText("Nombre");
         jRadioButton1.addActionListener(new java.awt.event.ActionListener() {
@@ -70,76 +88,56 @@ public class GestionConductores extends javax.swing.JFrame {
                 jRadioButton1ActionPerformed(evt);
             }
         });
+        getContentPane().add(jRadioButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 70, -1, -1));
 
         jRadioButton2.setText("Apellido");
+        getContentPane().add(jRadioButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 70, -1, -1));
 
         jLabel3.setText("Busqueda por:");
+        getContentPane().add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(19, 51, 105, 24));
 
-        jButton4.setText("Eliminar");
+        btnCondSalir.setText("Salir");
+        btnCondSalir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCondSalirActionPerformed(evt);
+            }
+        });
+        getContentPane().add(btnCondSalir, new org.netbeans.lib.awtextra.AbsoluteConstraints(730, 440, 140, 50));
 
-        jButton5.setText("Registrar");
+        btnCondEditar.setText("Editar");
+        getContentPane().add(btnCondEditar, new org.netbeans.lib.awtextra.AbsoluteConstraints(560, 440, 140, 50));
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(19, 19, 19)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jButton4)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jButton2)
-                                .addGap(85, 85, 85)
-                                .addComponent(jButton5)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 115, Short.MAX_VALUE)
-                                .addComponent(jButton3))
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(103, 103, 103)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(jRadioButton1)
-                                        .addGap(58, 58, 58)
-                                        .addComponent(jRadioButton2))
-                                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 172, javax.swing.GroupLayout.PREFERRED_SIZE)))))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 337, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(25, 25, 25))
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(51, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jButton3)
-                        .addComponent(jButton4)
-                        .addComponent(jButton5))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jRadioButton1)
-                            .addComponent(jRadioButton2))
-                        .addGap(17, 17, 17)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(18, 18, 18)
-                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(55, 55, 55)
-                        .addComponent(jButton2)))
-                .addGap(29, 29, 29))
-        );
+        btnCondVerTodos.setText("Ver todos");
+        btnCondVerTodos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCondVerTodosActionPerformed(evt);
+            }
+        });
+        getContentPane().add(btnCondVerTodos, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 100, 140, 50));
+
+        btnCondEliminar.setText("Eliminar");
+        btnCondEliminar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCondEliminarActionPerformed(evt);
+            }
+        });
+        getContentPane().add(btnCondEliminar, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 440, 140, 50));
+
+        btnCondIrARegNuevo.setText("Registrar");
+        btnCondIrARegNuevo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCondIrARegNuevoActionPerformed(evt);
+            }
+        });
+        getContentPane().add(btnCondIrARegNuevo, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 440, 140, 50));
+
+        btnCondBuscar1.setText("Buscar");
+        btnCondBuscar1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCondBuscar1ActionPerformed(evt);
+            }
+        });
+        getContentPane().add(btnCondBuscar1, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 100, 140, 50));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -148,13 +146,42 @@ public class GestionConductores extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jRadioButton1ActionPerformed
 
+    private void btnCondBuscar1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCondBuscar1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnCondBuscar1ActionPerformed
+
+    private void btnCondVerTodosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCondVerTodosActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnCondVerTodosActionPerformed
+
+    private void btnCondIrARegNuevoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCondIrARegNuevoActionPerformed
+
+        RegistrarConductor registrar = new RegistrarConductor();
+        registrar.setVisible(true);
+        this.setVisible(false);
+    }//GEN-LAST:event_btnCondIrARegNuevoActionPerformed
+
+    private void btnCondSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCondSalirActionPerformed
+        this.setVisible(false);
+    }//GEN-LAST:event_btnCondSalirActionPerformed
+
+    private void btnCondEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCondEliminarActionPerformed
+        int n = JOptionPane.showOptionDialog(this, "Seguro desea eliminar el Conductor?", "Eliminar Conductor", JOptionPane.YES_NO_CANCEL_OPTION, WIDTH, null,opcionesEliminarCond, opcionesEliminarCond[1]);
+        if (n==0) {
+            // eliminar conductor
+            JOptionPane.showMessageDialog(this, "Conductor eliminado exitosamente");
+        }
+    }//GEN-LAST:event_btnCondEliminarActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnCondBuscar1;
+    private javax.swing.JButton btnCondEditar;
+    private javax.swing.JButton btnCondEliminar;
+    private javax.swing.JButton btnCondIrARegNuevo;
+    private javax.swing.JButton btnCondSalir;
+    private javax.swing.JButton btnCondVerTodos;
     private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButton4;
-    private javax.swing.JButton jButton5;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JRadioButton jRadioButton1;

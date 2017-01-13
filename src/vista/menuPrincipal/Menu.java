@@ -16,6 +16,7 @@ import vista.creacionPDespacho.CreaciónPDespacho;
  * @author ESTIBENSON MAESTRE
  */
 public class Menu extends javax.swing.JFrame {
+    
 
     /**
      * Creates new form menú

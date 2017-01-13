@@ -94,19 +94,28 @@ public class Gestionar_buses extends javax.swing.JFrame {
                 {null, null, null, null, null, null, null, null, null, null, null, null, null, null, null}
             },
             new String [] {
-                "ID_Bus", "Vial", "PlanillaControl", "Capacidad", "clase", "clase de servicio", "Estado", "FechaMatricula", "VidaUtil", "Marca", "Modelo", "No.Chasis", "No.Motor", "placa", "vida util"
+                "ID_Bus", "Vial", "PlanillaControl", "Capacidad", "Clase", "Clase de servicio", "Estado", "FechaMatricula", "VidaUtil", "Marca", "Modelo", "No.Chasis", "No.Motor", "placa", "vida util"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false, false, false, false, false, false, false, false, true, true
+                false, false, false, false, false, false, false, false, false, false, false, false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
                 return canEdit [columnIndex];
             }
         });
+        tabBusesListaDeBuses.setColumnSelectionAllowed(true);
+        tabBusesListaDeBuses.setRowHeight(17);
         tabBusesListaDeBuses.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         jScrollPane1.setViewportView(tabBusesListaDeBuses);
+        tabBusesListaDeBuses.getColumnModel().getSelectionModel().setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+        if (tabBusesListaDeBuses.getColumnModel().getColumnCount() > 0) {
+            tabBusesListaDeBuses.getColumnModel().getColumn(1).setPreferredWidth(80);
+            tabBusesListaDeBuses.getColumnModel().getColumn(2).setPreferredWidth(120);
+            tabBusesListaDeBuses.getColumnModel().getColumn(4).setPreferredWidth(130);
+            tabBusesListaDeBuses.getColumnModel().getColumn(5).setPreferredWidth(130);
+        }
 
         jScrollPane2.setViewportView(jScrollPane1);
 
@@ -200,6 +209,7 @@ public class Gestionar_buses extends javax.swing.JFrame {
         int n = JOptionPane.showOptionDialog(this, "Seguro desea eliminar el bus?", "eliminar bus", JOptionPane.YES_NO_CANCEL_OPTION, WIDTH, null, opcionesEliminarBus, opcionesEliminarBus[1]);
         if (n==0) {
             // eliminar bus
+            JOptionPane.showMessageDialog(this, "Conductor eliminado exitosamente");
             
         } 
             

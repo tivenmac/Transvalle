@@ -60,7 +60,9 @@ public class DocumentosBus extends javax.swing.JFrame {
                 "ID_Documentos", "Aseguradora", "Nombre", "Fecha Expiracionn", "Fecha de expedicion"
             }
         ));
+        jTable1.setColumnSelectionAllowed(true);
         jScrollPane1.setViewportView(jTable1);
+        jTable1.getColumnModel().getSelectionModel().setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
 
         jScrollPane2.setViewportView(jScrollPane1);
 
@@ -180,6 +182,7 @@ public class DocumentosBus extends javax.swing.JFrame {
         int n = JOptionPane.showOptionDialog(this, "Seguro desea eliminar el Documento?", "Eliminar Documento", JOptionPane.YES_NO_CANCEL_OPTION, WIDTH, null, opcionesEliminarBus, opcionesEliminarBus[1]);
         if (n==0) {
             // eliminar documento
+            JOptionPane.showMessageDialog(this, "Conductor eliminado exitosamente");
             
         } 
 // TODO add your handling code here:

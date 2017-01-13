@@ -95,9 +95,6 @@
       <Properties>
         <Property name="text" type="java.lang.String" value="Registar Bus"/>
       </Properties>
-      <AccessibilityProperties>
-        <Property name="AccessibleContext.accessibleName" type="java.lang.String" value="Registar Bus"/>
-      </AccessibilityProperties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnGestBusIrARegistrarBusActionPerformed"/>
       </Events>
@@ -177,8 +174,8 @@
                     <Column editable="false" title="Vial" type="java.lang.Object"/>
                     <Column editable="false" title="PlanillaControl" type="java.lang.Object"/>
                     <Column editable="false" title="Capacidad" type="java.lang.Object"/>
-                    <Column editable="false" title="clase" type="java.lang.Object"/>
-                    <Column editable="false" title="clase de servicio" type="java.lang.Object"/>
+                    <Column editable="false" title="Clase" type="java.lang.Object"/>
+                    <Column editable="false" title="Clase de servicio" type="java.lang.Object"/>
                     <Column editable="false" title="Estado" type="java.lang.Object"/>
                     <Column editable="false" title="FechaMatricula" type="java.lang.Object"/>
                     <Column editable="false" title="VidaUtil" type="java.lang.Object"/>
@@ -186,13 +183,23 @@
                     <Column editable="false" title="Modelo" type="java.lang.Object"/>
                     <Column editable="false" title="No.Chasis" type="java.lang.Object"/>
                     <Column editable="false" title="No.Motor" type="java.lang.Object"/>
-                    <Column editable="true" title="placa" type="java.lang.Object"/>
-                    <Column editable="true" title="vida util" type="java.lang.Object"/>
+                    <Column editable="false" title="placa" type="java.lang.Object"/>
+                    <Column editable="false" title="vida util" type="java.lang.Object"/>
                   </Table>
                 </Property>
                 <Property name="columnModel" type="javax.swing.table.TableColumnModel" editor="org.netbeans.modules.form.editors2.TableColumnModelEditor">
-                  <TableColumnModel selectionModel="0">
+                  <TableColumnModel selectionModel="1">
                     <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
+                      <Title/>
+                      <Editor/>
+                      <Renderer/>
+                    </Column>
+                    <Column maxWidth="-1" minWidth="-1" prefWidth="80" resizable="true">
+                      <Title/>
+                      <Editor/>
+                      <Renderer/>
+                    </Column>
+                    <Column maxWidth="-1" minWidth="-1" prefWidth="120" resizable="true">
                       <Title/>
                       <Editor/>
                       <Renderer/>
@@ -202,22 +209,12 @@
                       <Editor/>
                       <Renderer/>
                     </Column>
-                    <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
+                    <Column maxWidth="-1" minWidth="-1" prefWidth="130" resizable="true">
                       <Title/>
                       <Editor/>
                       <Renderer/>
                     </Column>
-                    <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
-                      <Title/>
-                      <Editor/>
-                      <Renderer/>
-                    </Column>
-                    <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
-                      <Title/>
-                      <Editor/>
-                      <Renderer/>
-                    </Column>
-                    <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
+                    <Column maxWidth="-1" minWidth="-1" prefWidth="130" resizable="true">
                       <Title/>
                       <Editor/>
                       <Renderer/>
@@ -269,6 +266,8 @@
                     </Column>
                   </TableColumnModel>
                 </Property>
+                <Property name="columnSelectionAllowed" type="boolean" value="true"/>
+                <Property name="rowHeight" type="int" value="17"/>
                 <Property name="selectionModel" type="javax.swing.ListSelectionModel" editor="org.netbeans.modules.form.editors2.JTableSelectionModelEditor">
                   <JTableSelectionModel selectionMode="0"/>
                 </Property>
