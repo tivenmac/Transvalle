@@ -9,7 +9,7 @@ package vista.creaciónPDespacho;
  *
  * @author ESTIBENSON MAESTRE
  */
-public class CreaciónPDespacho extends javax.swing.JInternalFrame {
+public class CreaciónPDespacho extends javax.swing.JFrame {
 
     /**
      * Creates new form CreaciónPDespacho

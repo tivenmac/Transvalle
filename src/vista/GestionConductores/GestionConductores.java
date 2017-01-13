@@ -9,7 +9,7 @@ package vista.GestionConductores;
  *
  * @author Estibenson
  */
-public class GestionConductores extends javax.swing.JInternalFrame {
+public class GestionConductores extends javax.swing.JFrame {
 
     /**
      * Creates new form GestionConductores

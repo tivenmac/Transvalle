@@ -9,7 +9,7 @@ package vista.GestiondeRutas;
  *
  * @author ESTIBENSON MAESTRE
  */
-public class GestionRutas extends javax.swing.JInternalFrame {
+public class GestionRutas extends javax.swing.JFrame {
 
     /**
      * Creates new form GestionRutas

@@ -9,6 +9,7 @@ import vista.GestionBuses.Gestionar_buses;
 import vista.PrinciplaJframe;
 import vista.GestionConductores.GestionConductores;
 import vista.GestiondeRutas.GestionRutas;
+import vista.creaciónPDespacho.CreaciónPDespacho;
 
 /**
  *
@@ -51,6 +52,7 @@ public class menú extends javax.swing.JFrame {
         jButton2.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
         jButton2.setForeground(new java.awt.Color(0, 0, 255));
         jButton2.setText("Planilla De Control");
+        jButton2.setActionCommand("Planilla De Despacho");
         jButton2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton2ActionPerformed(evt);
@@ -119,9 +121,9 @@ public class menú extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-
-        
-        menú.this.setVisible(false);       
+        CreaciónPDespacho despacho = new CreaciónPDespacho();
+        despacho.setVisible(true);
+      //  menú.this.setVisible(false);       
 // TODO add your handling code here:
     }//GEN-LAST:event_jButton2ActionPerformed
 

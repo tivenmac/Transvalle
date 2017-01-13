@@ -83,6 +83,7 @@
           <Color blue="ff" green="0" red="0" type="rgb"/>
         </Property>
         <Property name="text" type="java.lang.String" value="Planilla De Control"/>
+        <Property name="actionCommand" type="java.lang.String" value="Planilla De Despacho"/>
       </Properties>
       <AccessibilityProperties>
         <Property name="AccessibleContext.accessibleName" type="java.lang.String" value="btnIrAPlanillaDeControl"/>
