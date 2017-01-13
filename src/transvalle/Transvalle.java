@@ -6,7 +6,7 @@
  */
 package transvalle;
 
-import vista.menúPrincipal.menú;
+import vista.menuPrincipal.Menu;
 
 /**
  *
@@ -18,7 +18,7 @@ public class Transvalle {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        menú miMenu = new menú();
+        Menu miMenu = new Menu();
         miMenu.setVisible(true);
         // TODO code application logic here
     }

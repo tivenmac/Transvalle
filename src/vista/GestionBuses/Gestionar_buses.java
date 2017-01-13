@@ -5,11 +5,15 @@
  */
 package vista.GestionBuses;
 
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author Estibenson
  */
 public class Gestionar_buses extends javax.swing.JFrame {
+    
+    Object[] opcionesEliminarBus = {"Si, Eliminar Bus","No, Cancelar"};
 
     /**
      * Creates new form Gestionar_buses
@@ -39,7 +43,7 @@ public class Gestionar_buses extends javax.swing.JFrame {
         btnGestionBusesIrAVerDocumentos = new javax.swing.JButton();
         jScrollPane2 = new javax.swing.JScrollPane();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        tabBusesListaDeBuses = new javax.swing.JTable();
         btnGestBusIrAEliminarBus = new javax.swing.JButton();
 
         setTitle("Gestionar Buses");
@@ -76,8 +80,13 @@ public class Gestionar_buses extends javax.swing.JFrame {
 
         btnGestionBusesIrAVerDocumentos.setText("Ver documentos");
         btnGestionBusesIrAVerDocumentos.setName("btnGestionBusesIrAVerDocumentos"); // NOI18N
+        btnGestionBusesIrAVerDocumentos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnGestionBusesIrAVerDocumentosActionPerformed(evt);
+            }
+        });
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        tabBusesListaDeBuses.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null, null, null, null, null, null, null, null, null, null, null, null},
                 {null, null, null, null, null, null, null, null, null, null, null, null, null, null, null},
@@ -96,12 +105,17 @@ public class Gestionar_buses extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
-        jTable1.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
-        jScrollPane1.setViewportView(jTable1);
+        tabBusesListaDeBuses.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+        jScrollPane1.setViewportView(tabBusesListaDeBuses);
 
         jScrollPane2.setViewportView(jScrollPane1);
 
         btnGestBusIrAEliminarBus.setText("Eliminar Bus");
+        btnGestBusIrAEliminarBus.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnGestBusIrAEliminarBusActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -167,16 +181,38 @@ public class Gestionar_buses extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnGestBusSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGestBusSalirActionPerformed
-        // TODO add your handling code here:
+        this.setVisible(false);
     }//GEN-LAST:event_btnGestBusSalirActionPerformed
 
     private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
         // TODO add your handling code here:
+        String id =(String)tabBusesListaDeBuses.getValueAt(tabBusesListaDeBuses.getSelectedRow(), 0);
     }//GEN-LAST:event_jTextField1ActionPerformed
 
     private void btnGestBusIrARegistrarBusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGestBusIrARegistrarBusActionPerformed
+        Registro_de_Buses registro = new Registro_de_Buses();
+        registro.setVisible(true);
+        this.setVisible(false);
         // TODO add your handling code here:
     }//GEN-LAST:event_btnGestBusIrARegistrarBusActionPerformed
+
+    private void btnGestBusIrAEliminarBusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGestBusIrAEliminarBusActionPerformed
+        int n = JOptionPane.showOptionDialog(this, "Seguro desea eliminar el bus?", "eliminar bus", JOptionPane.YES_NO_CANCEL_OPTION, WIDTH, null, opcionesEliminarBus, opcionesEliminarBus[1]);
+        if (n==0) {
+            // eliminar bus
+            
+        } 
+            
+        
+    }//GEN-LAST:event_btnGestBusIrAEliminarBusActionPerformed
+
+    private void btnGestionBusesIrAVerDocumentosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGestionBusesIrAVerDocumentosActionPerformed
+        // TODO add your handling code here:
+        DocumentosBus documentos = new DocumentosBus();
+        documentos.setVisible(true);
+        this.setVisible(false);
+        
+    }//GEN-LAST:event_btnGestionBusesIrAVerDocumentosActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -191,7 +227,7 @@ public class Gestionar_buses extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JTable jTable1;
     private javax.swing.JTextField jTextField1;
+    private javax.swing.JTable tabBusesListaDeBuses;
     // End of variables declaration//GEN-END:variables
 }

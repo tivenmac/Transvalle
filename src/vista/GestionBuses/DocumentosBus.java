@@ -5,12 +5,17 @@
  */
 package vista.GestionBuses;
 
+import static java.awt.image.ImageObserver.WIDTH;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author ESTIBENSON MAESTRE
  */
-public class DocumentosBus extends javax.swing.JInternalFrame {
+public class DocumentosBus extends javax.swing.JFrame {
 
+    Gestionar_buses buses;
+    Object[] opcionesEliminarBus = {"Si, Eliminar Documento","No, Cancelar"};
     /**
      * Creates new form Documentos
      */
@@ -35,9 +40,9 @@ public class DocumentosBus extends javax.swing.JInternalFrame {
         jLabel4 = new javax.swing.JLabel();
         jDateChooser1 = new com.toedter.calendar.JDateChooser();
         jDateChooser2 = new com.toedter.calendar.JDateChooser();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
+        btnGestBusSalirDocumentos = new javax.swing.JButton();
+        btnGestBusAgregarDocumento = new javax.swing.JButton();
+        btnGestBusEliminarDocumento = new javax.swing.JButton();
         jComboBox1 = new javax.swing.JComboBox<>();
         jLabel1 = new javax.swing.JLabel();
         jTextField1 = new javax.swing.JTextField();
@@ -65,11 +70,22 @@ public class DocumentosBus extends javax.swing.JInternalFrame {
 
         jLabel4.setText("fecha de expedición:");
 
-        jButton1.setText("salir");
+        btnGestBusSalirDocumentos.setText("Salir");
+        btnGestBusSalirDocumentos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnGestBusSalirDocumentosActionPerformed(evt);
+            }
+        });
 
-        jButton2.setText("agregar documento");
+        btnGestBusAgregarDocumento.setText("Agregar documento");
+        btnGestBusAgregarDocumento.setToolTipText("");
 
-        jButton3.setText("Eliminar Documento");
+        btnGestBusEliminarDocumento.setText("Eliminar Documento");
+        btnGestBusEliminarDocumento.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnGestBusEliminarDocumentoActionPerformed(evt);
+            }
+        });
 
         jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "tarjeta de propiedad", "SOAP", "seguro contractual", "seguro extracontractual" }));
 
@@ -85,7 +101,7 @@ public class DocumentosBus extends javax.swing.JInternalFrame {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addGroup(layout.createSequentialGroup()
                                 .addGap(36, 36, 36)
-                                .addComponent(jButton2))
+                                .addComponent(btnGestBusAgregarDocumento))
                             .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
                                 .addGap(22, 22, 22)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -109,16 +125,16 @@ public class DocumentosBus extends javax.swing.JInternalFrame {
                                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                                 .addComponent(jDateChooser1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))))))
                         .addGap(41, 41, 41))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jButton3)
-                        .addGap(111, 111, 111)
-                        .addComponent(jButton1)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addGap(0, 0, Short.MAX_VALUE)
+                                .addComponent(btnGestBusEliminarDocumento)
+                                .addGap(111, 111, 111)
+                                .addComponent(btnGestBusSalirDocumentos))
+                            .addComponent(jScrollPane2))))
                 .addContainerGap())
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 369, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -141,24 +157,39 @@ public class DocumentosBus extends javax.swing.JInternalFrame {
                     .addComponent(jLabel1)
                     .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(1, 1, 1)
-                .addComponent(jButton2)
+                .addComponent(btnGestBusAgregarDocumento)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 161, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 15, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton1)
-                    .addComponent(jButton3))
+                    .addComponent(btnGestBusSalirDocumentos)
+                    .addComponent(btnGestBusEliminarDocumento))
                 .addContainerGap())
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void btnGestBusSalirDocumentosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGestBusSalirDocumentosActionPerformed
+        buses = new Gestionar_buses();
+        buses.setVisible(true);
+        this.setVisible(false);
+    }//GEN-LAST:event_btnGestBusSalirDocumentosActionPerformed
+
+    private void btnGestBusEliminarDocumentoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGestBusEliminarDocumentoActionPerformed
+        int n = JOptionPane.showOptionDialog(this, "Seguro desea eliminar el Documento?", "Eliminar Documento", JOptionPane.YES_NO_CANCEL_OPTION, WIDTH, null, opcionesEliminarBus, opcionesEliminarBus[1]);
+        if (n==0) {
+            // eliminar documento
+            
+        } 
+// TODO add your handling code here:
+    }//GEN-LAST:event_btnGestBusEliminarDocumentoActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
+    private javax.swing.JButton btnGestBusAgregarDocumento;
+    private javax.swing.JButton btnGestBusEliminarDocumento;
+    private javax.swing.JButton btnGestBusSalirDocumentos;
     private javax.swing.JComboBox<String> jComboBox1;
     private com.toedter.calendar.JDateChooser jDateChooser1;
     private com.toedter.calendar.JDateChooser jDateChooser2;
