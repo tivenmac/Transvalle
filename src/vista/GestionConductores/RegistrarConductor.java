@@ -5,20 +5,31 @@
  */
 package vista.GestionConductores;
 
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.EntityTransaction;
+import model.Persona;
+
 /**
  *
  * @author oscar
  */
 public class RegistrarConductor extends javax.swing.JFrame {
 
-    /**
-     * Creates new form RegistrarConductor
-     */
-    public RegistrarConductor() {
+    private EntityManagerFactory emf;
+    private EntityManager em;
+    private EntityTransaction tx;
+    
+    public RegistrarConductor(EntityManagerFactory emf, EntityManager em, EntityTransaction tx) 
+    {
+        this.emf = emf;
+        this.em = em;
+        this.tx = tx;       
         initComponents();
         this.setLocationRelativeTo(null);
     }
 
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -40,11 +51,21 @@ public class RegistrarConductor extends javax.swing.JFrame {
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
-        jDateChooser1 = new com.toedter.calendar.JDateChooser();
+        txtCondRegisNuevoFecha = new com.toedter.calendar.JDateChooser();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
+        jButton1.setBackground(new java.awt.Color(0, 204, 255));
+        jButton1.setForeground(new java.awt.Color(255, 255, 255));
         jButton1.setText("Registrar Conductor");
+        jButton1.setBorder(null);
+        jButton1.setBorderPainted(false);
+        jButton1.setFocusPainted(false);
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         jLabel1.setText("No de Documento");
 
@@ -84,7 +105,7 @@ public class RegistrarConductor extends javax.swing.JFrame {
                             .addComponent(txtCondRegisNuevoApellido, javax.swing.GroupLayout.DEFAULT_SIZE, 184, Short.MAX_VALUE)
                             .addComponent(txtCondRegisNuevoDireccion, javax.swing.GroupLayout.DEFAULT_SIZE, 184, Short.MAX_VALUE)
                             .addComponent(txtCondRegistrarNuevoNoDocumento, javax.swing.GroupLayout.DEFAULT_SIZE, 184, Short.MAX_VALUE)
-                            .addComponent(jDateChooser1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                            .addComponent(txtCondRegisNuevoFecha, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(104, 104, 104)
                         .addComponent(jLabel6)))
@@ -117,7 +138,7 @@ public class RegistrarConductor extends javax.swing.JFrame {
                         .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, 20, Short.MAX_VALUE)
                         .addGap(70, 70, 70))
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jDateChooser1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(txtCondRegisNuevoFecha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(86, 86, 86))
@@ -139,6 +160,19 @@ public class RegistrarConductor extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        
+        Persona nuevoConductor = new Persona();
+        nuevoConductor.setApellido(txtCondRegisNuevoApellido.getText());
+        nuevoConductor.setCedula(txtCondRegistrarNuevoNoDocumento.getText());
+        nuevoConductor.setNombre(txtCondRegisNuevoNombre.getText());
+        nuevoConductor.setDirección(txtCondRegisNuevoDireccion.getText());
+        nuevoConductor.setFechaNacimiento(txtCondRegisNuevoFecha.getDate());
+        tx.begin();
+        em.persist(nuevoConductor);
+        tx.commit();
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -170,14 +204,13 @@ public class RegistrarConductor extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new RegistrarConductor().setVisible(true);
+      //          new RegistrarConductor().setVisible(true);
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
-    private com.toedter.calendar.JDateChooser jDateChooser1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -187,6 +220,7 @@ public class RegistrarConductor extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JTextField txtCondRegisNuevoApellido;
     private javax.swing.JTextField txtCondRegisNuevoDireccion;
+    private com.toedter.calendar.JDateChooser txtCondRegisNuevoFecha;
     private javax.swing.JTextField txtCondRegisNuevoNombre;
     private javax.swing.JTextField txtCondRegistrarNuevoNoDocumento;
     // End of variables declaration//GEN-END:variables

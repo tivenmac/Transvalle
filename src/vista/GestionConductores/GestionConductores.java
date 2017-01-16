@@ -6,6 +6,10 @@
 package vista.GestionConductores;
 
 import static java.awt.image.ImageObserver.WIDTH;
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.EntityTransaction;
+import javax.persistence.Persistence;
 import javax.swing.JOptionPane;
 
 /**
@@ -13,12 +17,19 @@ import javax.swing.JOptionPane;
  * @author Estibenson
  */
 public class GestionConductores extends javax.swing.JFrame {
+    
+    private EntityManagerFactory emf;
+    private EntityManager em;
+    private EntityTransaction tx;
 
     Object[] opcionesEliminarCond = {"Si, Eliminar Conductor","No, Cancelar"};
     /**
      * Creates new form GestionConductores
      */
     public GestionConductores() {
+        emf = Persistence.createEntityManagerFactory("TransvallePU");
+        em = emf.createEntityManager();
+        tx = em.getTransaction();
         initComponents();
         this.setLocationRelativeTo(null);
     }
@@ -43,12 +54,10 @@ public class GestionConductores extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
         btnCondSalir = new javax.swing.JButton();
         btnCondEditar = new javax.swing.JButton();
-        btnCondVerTodos = new javax.swing.JButton();
         btnCondEliminar = new javax.swing.JButton();
         btnCondIrARegNuevo = new javax.swing.JButton();
         btnCondBuscar1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
 
         jButton1.setText("jButton1");
 
@@ -98,40 +107,51 @@ public class GestionConductores extends javax.swing.JFrame {
         jLabel3.setText("Busqueda por:");
         getContentPane().add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(19, 51, 105, 24));
 
+        btnCondSalir.setBackground(new java.awt.Color(0, 204, 255));
+        btnCondSalir.setForeground(new java.awt.Color(255, 255, 255));
         btnCondSalir.setText("Salir");
+        btnCondSalir.setBorder(null);
+        btnCondSalir.setBorderPainted(false);
+        btnCondSalir.setFocusPainted(false);
         btnCondSalir.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnCondSalirActionPerformed(evt);
             }
         });
-        getContentPane().add(btnCondSalir, new org.netbeans.lib.awtextra.AbsoluteConstraints(880, 440, 140, 50));
+        getContentPane().add(btnCondSalir, new org.netbeans.lib.awtextra.AbsoluteConstraints(800, 440, 120, 40));
 
+        btnCondEditar.setBackground(new java.awt.Color(0, 204, 255));
+        btnCondEditar.setForeground(new java.awt.Color(255, 255, 255));
         btnCondEditar.setText("Editar");
-        getContentPane().add(btnCondEditar, new org.netbeans.lib.awtextra.AbsoluteConstraints(560, 440, 140, 50));
+        btnCondEditar.setBorder(null);
+        btnCondEditar.setBorderPainted(false);
+        btnCondEditar.setFocusPainted(false);
+        getContentPane().add(btnCondEditar, new org.netbeans.lib.awtextra.AbsoluteConstraints(640, 440, 130, 40));
 
-        btnCondVerTodos.setText("Ver todos");
-        btnCondVerTodos.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnCondVerTodosActionPerformed(evt);
-            }
-        });
-        getContentPane().add(btnCondVerTodos, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 100, 140, 50));
-
+        btnCondEliminar.setBackground(new java.awt.Color(0, 204, 255));
+        btnCondEliminar.setForeground(new java.awt.Color(255, 255, 255));
         btnCondEliminar.setText("Eliminar");
+        btnCondEliminar.setBorder(null);
+        btnCondEliminar.setBorderPainted(false);
         btnCondEliminar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnCondEliminarActionPerformed(evt);
             }
         });
-        getContentPane().add(btnCondEliminar, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 440, 140, 50));
+        getContentPane().add(btnCondEliminar, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 440, 120, 40));
 
+        btnCondIrARegNuevo.setBackground(new java.awt.Color(0, 204, 255));
+        btnCondIrARegNuevo.setForeground(new java.awt.Color(255, 255, 255));
         btnCondIrARegNuevo.setText("Registrar");
+        btnCondIrARegNuevo.setBorder(null);
+        btnCondIrARegNuevo.setBorderPainted(false);
+        btnCondIrARegNuevo.setFocusPainted(false);
         btnCondIrARegNuevo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnCondIrARegNuevoActionPerformed(evt);
             }
         });
-        getContentPane().add(btnCondIrARegNuevo, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 440, 140, 50));
+        getContentPane().add(btnCondIrARegNuevo, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 440, 130, 40));
 
         btnCondBuscar1.setText("Buscar");
         btnCondBuscar1.addActionListener(new java.awt.event.ActionListener() {
@@ -139,13 +159,15 @@ public class GestionConductores extends javax.swing.JFrame {
                 btnCondBuscar1ActionPerformed(evt);
             }
         });
-        getContentPane().add(btnCondBuscar1, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 100, 140, 50));
+        getContentPane().add(btnCondBuscar1, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 110, 130, 40));
 
+        jButton2.setBackground(new java.awt.Color(0, 204, 255));
+        jButton2.setForeground(new java.awt.Color(255, 255, 255));
         jButton2.setText("Asignar Bus");
-        getContentPane().add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 440, 140, 50));
-
-        jButton3.setText("Detalles conductor");
-        getContentPane().add(jButton3, new org.netbeans.lib.awtextra.AbsoluteConstraints(740, 440, 120, 50));
+        jButton2.setBorder(null);
+        jButton2.setBorderPainted(false);
+        jButton2.setFocusPainted(false);
+        getContentPane().add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 440, 130, 40));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -158,13 +180,9 @@ public class GestionConductores extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_btnCondBuscar1ActionPerformed
 
-    private void btnCondVerTodosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCondVerTodosActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnCondVerTodosActionPerformed
-
     private void btnCondIrARegNuevoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCondIrARegNuevoActionPerformed
 
-        RegistrarConductor registrar = new RegistrarConductor();
+        RegistrarConductor registrar = new RegistrarConductor(emf, em, tx);
         registrar.setVisible(true);
         this.setVisible(false);
     }//GEN-LAST:event_btnCondIrARegNuevoActionPerformed
@@ -188,10 +206,8 @@ public class GestionConductores extends javax.swing.JFrame {
     private javax.swing.JButton btnCondEliminar;
     private javax.swing.JButton btnCondIrARegNuevo;
     private javax.swing.JButton btnCondSalir;
-    private javax.swing.JButton btnCondVerTodos;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JRadioButton jRadioButton1;
