@@ -52,13 +52,13 @@ public class DocumentosBus extends javax.swing.JFrame {
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null}
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
             },
             new String [] {
-                "ID_Documentos", "Aseguradora", "Nombre", "Fecha Expiracionn", "Fecha de expedicion"
+                "tipo_documento", "numero", "Fecha Expiracionn", "Fecha de expedicion"
             }
         ));
         jTable1.setColumnSelectionAllowed(true);
@@ -67,7 +67,7 @@ public class DocumentosBus extends javax.swing.JFrame {
 
         jScrollPane2.setViewportView(jScrollPane1);
 
-        jLabel2.setText("tipi doc:");
+        jLabel2.setText("tipo doc:");
 
         jLabel3.setText("feha de expiración:");
 
@@ -92,7 +92,7 @@ public class DocumentosBus extends javax.swing.JFrame {
 
         jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "tarjeta de propiedad", "SOAP", "seguro contractual", "seguro extracontractual" }));
 
-        jLabel1.setText("Aseguradora:");
+        jLabel1.setText("numero:");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);

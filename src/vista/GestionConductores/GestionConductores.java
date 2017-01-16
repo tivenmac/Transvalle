@@ -47,6 +47,8 @@ public class GestionConductores extends javax.swing.JFrame {
         btnCondEliminar = new javax.swing.JButton();
         btnCondIrARegNuevo = new javax.swing.JButton();
         btnCondBuscar1 = new javax.swing.JButton();
+        jButton2 = new javax.swing.JButton();
+        jButton3 = new javax.swing.JButton();
 
         jButton1.setText("jButton1");
 
@@ -55,17 +57,17 @@ public class GestionConductores extends javax.swing.JFrame {
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null}
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null}
             },
             new String [] {
-                "ID_Persona", "No. doc", "Nombre", "Apellido", "Dirección", "FechaNacimiento"
+                "No. documento", "Nombre", "Apellido", "Dirección", "FechaNacimiento"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false
+                false, false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -102,7 +104,7 @@ public class GestionConductores extends javax.swing.JFrame {
                 btnCondSalirActionPerformed(evt);
             }
         });
-        getContentPane().add(btnCondSalir, new org.netbeans.lib.awtextra.AbsoluteConstraints(730, 440, 140, 50));
+        getContentPane().add(btnCondSalir, new org.netbeans.lib.awtextra.AbsoluteConstraints(880, 440, 140, 50));
 
         btnCondEditar.setText("Editar");
         getContentPane().add(btnCondEditar, new org.netbeans.lib.awtextra.AbsoluteConstraints(560, 440, 140, 50));
@@ -138,6 +140,12 @@ public class GestionConductores extends javax.swing.JFrame {
             }
         });
         getContentPane().add(btnCondBuscar1, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 100, 140, 50));
+
+        jButton2.setText("Asignar Bus");
+        getContentPane().add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 440, 140, 50));
+
+        jButton3.setText("Detalles conductor");
+        getContentPane().add(jButton3, new org.netbeans.lib.awtextra.AbsoluteConstraints(740, 440, 120, 50));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -182,6 +190,8 @@ public class GestionConductores extends javax.swing.JFrame {
     private javax.swing.JButton btnCondSalir;
     private javax.swing.JButton btnCondVerTodos;
     private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
+    private javax.swing.JButton jButton3;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JRadioButton jRadioButton1;

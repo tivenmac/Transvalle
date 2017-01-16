@@ -49,7 +49,9 @@
                       <Component id="btnGestionBusesIrAVerDocumentos" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="btnGestBusIrAEliminarBus" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace pref="403" max="32767" attributes="0"/>
+                      <EmptySpace min="-2" pref="70" max="-2" attributes="0"/>
+                      <Component id="jButton1" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace pref="244" max="32767" attributes="0"/>
                       <Component id="btnGestBusIrARegistrarBus" min="-2" max="-2" attributes="0"/>
                       <EmptySpace type="separate" max="-2" attributes="0"/>
                       <Component id="btnGestBusIrAEditarBus" min="-2" max="-2" attributes="0"/>
@@ -84,8 +86,9 @@
                   <Component id="btnGestBusIrAEditarBus" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="btnGestBusSalir" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="btnGestBusIrAEliminarBus" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="jButton1" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace pref="154" max="32767" attributes="0"/>
+              <EmptySpace max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -135,10 +138,9 @@
     <Component class="javax.swing.JComboBox" name="ConsultaBus_comboBox">
       <Properties>
         <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-          <StringArray count="3">
-            <StringItem index="0" value="ID_Propietario"/>
-            <StringItem index="1" value="Placa"/>
-            <StringItem index="2" value="Vial"/>
+          <StringArray count="2">
+            <StringItem index="0" value="Placa"/>
+            <StringItem index="1" value="Vial"/>
           </StringArray>
         </Property>
       </Properties>
@@ -169,31 +171,23 @@
             <Component class="javax.swing.JTable" name="tabBusesListaDeBuses">
               <Properties>
                 <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
-                  <Table columnCount="15" rowCount="4">
-                    <Column editable="false" title="ID_Bus" type="java.lang.Object"/>
+                  <Table columnCount="12" rowCount="4">
                     <Column editable="false" title="Vial" type="java.lang.Object"/>
-                    <Column editable="false" title="PlanillaControl" type="java.lang.Object"/>
-                    <Column editable="false" title="Capacidad" type="java.lang.Object"/>
-                    <Column editable="false" title="Clase" type="java.lang.Object"/>
-                    <Column editable="false" title="Clase de servicio" type="java.lang.Object"/>
-                    <Column editable="false" title="Estado" type="java.lang.Object"/>
-                    <Column editable="false" title="FechaMatricula" type="java.lang.Object"/>
-                    <Column editable="false" title="VidaUtil" type="java.lang.Object"/>
-                    <Column editable="false" title="Marca" type="java.lang.Object"/>
+                    <Column editable="false" title="Placal" type="java.lang.Object"/>
                     <Column editable="false" title="Modelo" type="java.lang.Object"/>
-                    <Column editable="false" title="No.Chasis" type="java.lang.Object"/>
+                    <Column editable="false" title="Clase" type="java.lang.Object"/>
+                    <Column editable="false" title="Marca" type="java.lang.Object"/>
+                    <Column editable="false" title="Capacidad" type="java.lang.Object"/>
                     <Column editable="false" title="No.Motor" type="java.lang.Object"/>
-                    <Column editable="false" title="placa" type="java.lang.Object"/>
-                    <Column editable="false" title="vida util" type="java.lang.Object"/>
+                    <Column editable="false" title="No.Chasis" type="java.lang.Object"/>
+                    <Column editable="false" title="FechaMatricula" type="java.lang.Object"/>
+                    <Column editable="true" title="observaciones" type="java.lang.Object"/>
+                    <Column editable="false" title="Estado" type="java.lang.Object"/>
+                    <Column editable="false" title="Clase de servicio" type="java.lang.Object"/>
                   </Table>
                 </Property>
                 <Property name="columnModel" type="javax.swing.table.TableColumnModel" editor="org.netbeans.modules.form.editors2.TableColumnModelEditor">
                   <TableColumnModel selectionModel="1">
-                    <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
-                      <Title/>
-                      <Editor/>
-                      <Renderer/>
-                    </Column>
                     <Column maxWidth="-1" minWidth="-1" prefWidth="80" resizable="true">
                       <Title/>
                       <Editor/>
@@ -214,52 +208,42 @@
                       <Editor/>
                       <Renderer/>
                     </Column>
+                    <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
+                      <Title/>
+                      <Editor/>
+                      <Renderer/>
+                    </Column>
+                    <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
+                      <Title/>
+                      <Editor/>
+                      <Renderer/>
+                    </Column>
+                    <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
+                      <Title/>
+                      <Editor/>
+                      <Renderer/>
+                    </Column>
+                    <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
+                      <Title/>
+                      <Editor/>
+                      <Renderer/>
+                    </Column>
+                    <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
+                      <Title/>
+                      <Editor/>
+                      <Renderer/>
+                    </Column>
+                    <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
+                      <Title/>
+                      <Editor/>
+                      <Renderer/>
+                    </Column>
+                    <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
+                      <Title/>
+                      <Editor/>
+                      <Renderer/>
+                    </Column>
                     <Column maxWidth="-1" minWidth="-1" prefWidth="130" resizable="true">
-                      <Title/>
-                      <Editor/>
-                      <Renderer/>
-                    </Column>
-                    <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
-                      <Title/>
-                      <Editor/>
-                      <Renderer/>
-                    </Column>
-                    <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
-                      <Title/>
-                      <Editor/>
-                      <Renderer/>
-                    </Column>
-                    <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
-                      <Title/>
-                      <Editor/>
-                      <Renderer/>
-                    </Column>
-                    <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
-                      <Title/>
-                      <Editor/>
-                      <Renderer/>
-                    </Column>
-                    <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
-                      <Title/>
-                      <Editor/>
-                      <Renderer/>
-                    </Column>
-                    <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
-                      <Title/>
-                      <Editor/>
-                      <Renderer/>
-                    </Column>
-                    <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
-                      <Title/>
-                      <Editor/>
-                      <Renderer/>
-                    </Column>
-                    <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
-                      <Title/>
-                      <Editor/>
-                      <Renderer/>
-                    </Column>
-                    <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
                       <Title/>
                       <Editor/>
                       <Renderer/>
@@ -287,6 +271,11 @@
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnGestBusIrAEliminarBusActionPerformed"/>
       </Events>
+    </Component>
+    <Component class="javax.swing.JButton" name="jButton1">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="imprimir Bus"/>
+      </Properties>
     </Component>
   </SubComponents>
 </Form>

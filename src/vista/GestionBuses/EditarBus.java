@@ -39,20 +39,20 @@ public class EditarBus extends javax.swing.JFrame {
         txtGestBusEdtBusFechaMatricula = new com.toedter.calendar.JDateChooser();
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
-        jLabel6 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
         jLabel10 = new javax.swing.JLabel();
         btnGestBusEdtBusGuardar = new javax.swing.JButton();
         txtGestBusEdtBusPlaca = new javax.swing.JTextField();
-        txtGestBusEdtBusVidaUtil = new javax.swing.JTextField();
         txtGestBusEdtBusEstado = new javax.swing.JTextField();
         txtGestBusEdtBusMarca = new javax.swing.JTextField();
         txtGestBusEdtBusChasis = new javax.swing.JTextField();
         txtGestBusEdtBusMotor = new javax.swing.JTextField();
         txtGestBusEdtBusCapacidad = new javax.swing.JTextField();
         txtGestBusEdtBusVial = new javax.swing.JTextField();
-        txtGestBusRegEdtPlanillaControl = new javax.swing.JTextField();
+        jTextField1 = new javax.swing.JTextField();
+        jButton1 = new javax.swing.JButton();
+        jButton2 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -88,17 +88,14 @@ public class EditarBus extends javax.swing.JFrame {
         jLabel5.setText("No.Chasis:");
         getContentPane().add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(6, 139, -1, -1));
 
-        jLabel6.setText("Planilla Control:");
-        getContentPane().add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 241, -1, -1));
-
         jLabel7.setText("No.Motor:");
         getContentPane().add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(432, 139, -1, -1));
 
         jLabel8.setText("Estado:");
         getContentPane().add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(6, 241, -1, -1));
 
-        jLabel10.setText("Vida Util:");
-        getContentPane().add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(439, 186, -1, -1));
+        jLabel10.setText("Observaciones:");
+        getContentPane().add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 180, -1, -1));
 
         btnGestBusEdtBusGuardar.setText("Guardar Cambios");
         btnGestBusEdtBusGuardar.setName("RegistrarBusBtn"); // NOI18N
@@ -109,7 +106,6 @@ public class EditarBus extends javax.swing.JFrame {
         });
         getContentPane().add(btnGestBusEdtBusGuardar, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 340, 160, 42));
         getContentPane().add(txtGestBusEdtBusPlaca, new org.netbeans.lib.awtextra.AbsoluteConstraints(159, 6, 92, -1));
-        getContentPane().add(txtGestBusEdtBusVidaUtil, new org.netbeans.lib.awtextra.AbsoluteConstraints(509, 182, 92, -1));
         getContentPane().add(txtGestBusEdtBusEstado, new org.netbeans.lib.awtextra.AbsoluteConstraints(159, 237, 92, -1));
         getContentPane().add(txtGestBusEdtBusMarca, new org.netbeans.lib.awtextra.AbsoluteConstraints(159, 90, 92, -1));
         getContentPane().add(txtGestBusEdtBusChasis, new org.netbeans.lib.awtextra.AbsoluteConstraints(159, 135, 92, -1));
@@ -122,7 +118,13 @@ public class EditarBus extends javax.swing.JFrame {
             }
         });
         getContentPane().add(txtGestBusEdtBusVial, new org.netbeans.lib.awtextra.AbsoluteConstraints(501, 6, 92, -1));
-        getContentPane().add(txtGestBusRegEdtPlanillaControl, new org.netbeans.lib.awtextra.AbsoluteConstraints(509, 237, 92, -1));
+        getContentPane().add(jTextField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 210, 130, 60));
+
+        jButton1.setText("guardar cambios");
+        getContentPane().add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 270, -1, -1));
+
+        jButton2.setText("salir");
+        getContentPane().add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 270, -1, -1));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -172,6 +174,8 @@ public class EditarBus extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnGestBusEdtBusGuardar;
+    private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -181,9 +185,9 @@ public class EditarBus extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
+    private javax.swing.JTextField jTextField1;
     private javax.swing.JTextField txtGestBusEdtBusCapacidad;
     private javax.swing.JTextField txtGestBusEdtBusChasis;
     private javax.swing.JComboBox<String> txtGestBusEdtBusClase;
@@ -194,7 +198,5 @@ public class EditarBus extends javax.swing.JFrame {
     private javax.swing.JTextField txtGestBusEdtBusPlaca;
     private javax.swing.JComboBox<String> txtGestBusEdtBusServicio;
     private javax.swing.JTextField txtGestBusEdtBusVial;
-    private javax.swing.JTextField txtGestBusEdtBusVidaUtil;
-    private javax.swing.JTextField txtGestBusRegEdtPlanillaControl;
     // End of variables declaration//GEN-END:variables
 }

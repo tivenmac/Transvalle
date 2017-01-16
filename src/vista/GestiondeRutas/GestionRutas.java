@@ -49,17 +49,17 @@ public class GestionRutas extends javax.swing.JFrame {
 
         tablaRutaPrincipal.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null, null}
+                {null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null}
             },
             new String [] {
-                "ID. Ruta", "Nombre", "Planilla control", "Capacidad", "descripción", "Descripción Retorno", "Descripción salida", "Frecuencia", "gabela", "Longitud", "Tiempo Recorrido"
+                "Nombre", "Planilla control", "Capacidad", "descripción", "Descripción Retorno", "Descripción salida", "Frecuencia", "gabela", "Longitud", "Tiempo Recorrido"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false, false, false, false, false, false
+                false, false, false, false, false, false, false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {

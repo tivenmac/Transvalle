@@ -45,6 +45,7 @@ public class Gestionar_buses extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         tabBusesListaDeBuses = new javax.swing.JTable();
         btnGestBusIrAEliminarBus = new javax.swing.JButton();
+        jButton1 = new javax.swing.JButton();
 
         setTitle("Gestionar Buses");
 
@@ -76,7 +77,7 @@ public class Gestionar_buses extends javax.swing.JFrame {
 
         jLabel2.setText("Consultar por:");
 
-        ConsultaBus_comboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "ID_Propietario", "Placa", "Vial" }));
+        ConsultaBus_comboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Placa", "Vial" }));
 
         btnGestionBusesIrAVerDocumentos.setText("Ver documentos");
         btnGestionBusesIrAVerDocumentos.setName("btnGestionBusesIrAVerDocumentos"); // NOI18N
@@ -88,17 +89,17 @@ public class Gestionar_buses extends javax.swing.JFrame {
 
         tabBusesListaDeBuses.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null, null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null, null, null, null, null, null}
+                {null, null, null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null, null, null}
             },
             new String [] {
-                "ID_Bus", "Vial", "PlanillaControl", "Capacidad", "Clase", "Clase de servicio", "Estado", "FechaMatricula", "VidaUtil", "Marca", "Modelo", "No.Chasis", "No.Motor", "placa", "vida util"
+                "Vial", "Placal", "Modelo", "Clase", "Marca", "Capacidad", "No.Motor", "No.Chasis", "FechaMatricula", "observaciones", "Estado", "Clase de servicio"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false, false, false, false, false, false, false, false, false, false
+                false, false, false, false, false, false, false, false, false, true, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -111,10 +112,10 @@ public class Gestionar_buses extends javax.swing.JFrame {
         jScrollPane1.setViewportView(tabBusesListaDeBuses);
         tabBusesListaDeBuses.getColumnModel().getSelectionModel().setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         if (tabBusesListaDeBuses.getColumnModel().getColumnCount() > 0) {
-            tabBusesListaDeBuses.getColumnModel().getColumn(1).setPreferredWidth(80);
-            tabBusesListaDeBuses.getColumnModel().getColumn(2).setPreferredWidth(120);
-            tabBusesListaDeBuses.getColumnModel().getColumn(4).setPreferredWidth(130);
-            tabBusesListaDeBuses.getColumnModel().getColumn(5).setPreferredWidth(130);
+            tabBusesListaDeBuses.getColumnModel().getColumn(0).setPreferredWidth(80);
+            tabBusesListaDeBuses.getColumnModel().getColumn(1).setPreferredWidth(120);
+            tabBusesListaDeBuses.getColumnModel().getColumn(3).setPreferredWidth(130);
+            tabBusesListaDeBuses.getColumnModel().getColumn(11).setPreferredWidth(130);
         }
 
         jScrollPane2.setViewportView(jScrollPane1);
@@ -125,6 +126,8 @@ public class Gestionar_buses extends javax.swing.JFrame {
                 btnGestBusIrAEliminarBusActionPerformed(evt);
             }
         });
+
+        jButton1.setText("imprimir Bus");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -152,7 +155,9 @@ public class Gestionar_buses extends javax.swing.JFrame {
                         .addComponent(btnGestionBusesIrAVerDocumentos)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btnGestBusIrAEliminarBus)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 403, Short.MAX_VALUE)
+                        .addGap(70, 70, 70)
+                        .addComponent(jButton1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 244, Short.MAX_VALUE)
                         .addComponent(btnGestBusIrARegistrarBus)
                         .addGap(18, 18, 18)
                         .addComponent(btnGestBusIrAEditarBus)
@@ -180,11 +185,10 @@ public class Gestionar_buses extends javax.swing.JFrame {
                     .addComponent(btnGestBusIrARegistrarBus)
                     .addComponent(btnGestBusIrAEditarBus)
                     .addComponent(btnGestBusSalir)
-                    .addComponent(btnGestBusIrAEliminarBus))
-                .addContainerGap(154, Short.MAX_VALUE))
+                    .addComponent(btnGestBusIrAEliminarBus)
+                    .addComponent(jButton1))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
-
-        btnGestBusIrARegistrarBus.getAccessibleContext().setAccessibleName("Registar Bus");
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -232,6 +236,7 @@ public class Gestionar_buses extends javax.swing.JFrame {
     private javax.swing.JButton btnGestBusIrARegistrarBus;
     private javax.swing.JButton btnGestBusSalir;
     private javax.swing.JButton btnGestionBusesIrAVerDocumentos;
+    private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton4;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
