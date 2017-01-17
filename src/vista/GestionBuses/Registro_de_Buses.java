@@ -34,9 +34,31 @@ public class Registro_de_Buses extends javax.swing.JFrame {
         this.setLocationRelativeTo(null);
     }
 
-    /**
-     * Creates new form Gestion_de_Buses
-     */
+    public Registro_de_Buses(EntityManagerFactory emf, EntityManager em, EntityTransaction tx, Bus bus) {
+        this.emf = emf;
+        this.em = em;
+        this.tx = tx;
+        this.bus = bus;
+        initComponents();
+        btnGuardarCambios.setLocation(btnRegistrar1.getLocation());
+        btnRegistrar1.setVisible(false);
+        this.setLocationRelativeTo(null);
+        
+        txtGestBusRegBusCapacidad.setText(bus.getCapacidad());
+        txtGestBusRegBusChasis.setText(bus.getNumeroChasis());
+        txtGestBusRegBusEstado.setText(bus.getEstado());
+        txtGestBusRegBusFechaMatricula.setText(String.valueOf(bus.getFechaMatricula()));
+        txtGestBusRegBusMarca.setText(bus.getMarca());
+        txtGestBusRegBusMotor.setText(bus.getNumeroMotor());
+        txtGestBusRegBusPlaca.setText(bus.getPlaca());
+        txtObservaciones.setText(bus.getObservaciones());
+        txtGestBusRegBusVial.setText(bus.getVial());
+        
+    }
+    
+    
+    
+
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -120,6 +142,11 @@ public class Registro_de_Buses extends javax.swing.JFrame {
         btnGuardarCambios.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnGuardarCambios.setFocusPainted(false);
         btnGuardarCambios.setName("RegistrarBusBtn"); // NOI18N
+        btnGuardarCambios.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnGuardarCambiosActionPerformed(evt);
+            }
+        });
 
         btnRegistrar1.setBackground(new java.awt.Color(0, 204, 255));
         btnRegistrar1.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
@@ -273,11 +300,8 @@ public class Registro_de_Buses extends javax.swing.JFrame {
                 || txtGestBusRegBusPlaca.getText().isEmpty()
                 || txtGestBusRegBusCapacidad.getText().isEmpty()
                 || txtGestBusRegBusMotor.getText().isEmpty()) {  //faltan algunos campos por llenar
-            JOptionPane.showMessageDialog(this, "Debe llenar todos los campos para registrar bus.", "Campos vacíos", JOptionPane.ERROR_MESSAGE);
-            
-            
-            
-
+            JOptionPane.showMessageDialog(this, "Debe llenar todos los campos para registrar bus.", "Campos vacíos", JOptionPane.ERROR_MESSAGE);           
+                    
         } else {     //campos completados
             Bus bus = new Bus();
             bus.setCapacidad(txtGestBusRegBusCapacidad.getText());
@@ -306,6 +330,41 @@ public class Registro_de_Buses extends javax.swing.JFrame {
 
         }
     }//GEN-LAST:event_btnRegistrar1ActionPerformed
+
+    private void btnGuardarCambiosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarCambiosActionPerformed
+        if (txtGestBusRegBusFechaMatricula.getText().isEmpty() || txtObservaciones.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Debe llenar todos los campos para registrar bus.", "Campos vacíos", JOptionPane.ERROR_MESSAGE);
+        } else {
+              bus.setCapacidad(txtGestBusRegBusCapacidad.getText());
+            bus.setClase(txtGestBusRegBusClase.getSelectedItem().toString());
+            bus.setClaseServicio(txtGestBusRegBusServicio.getSelectedItem().toString());
+            bus.setEstado(txtGestBusRegBusEstado.getText());
+            bus.setFechaMatricula(Integer.parseInt(txtGestBusRegBusFechaMatricula.getText()));
+            bus.setMarca(txtGestBusRegBusMarca.getText());
+            try {
+                bus.setModelo(txtGestBusRegBusFechaMatricula.getText(0, 4));
+                
+                System.err.println(bus.getModelo());
+            } catch (BadLocationException ex) {
+                Logger.getLogger(Registro_de_Buses.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            bus.setNumeroChasis(txtGestBusRegBusChasis.getText());
+            bus.setNumeroMotor(txtGestBusRegBusMotor.getText());
+            bus.setObservaciones(txtObservaciones.getText());
+            bus.setPlaca(txtGestBusRegBusPlaca.getText());
+            bus.setVial(txtGestBusRegBusVial.getText());
+        
+            tx.begin();
+            em.merge(bus);
+            tx.commit();
+            JOptionPane.showMessageDialog(this, "Bus Editado exitosamente");
+            this.setVisible(false);
+            Gestionar_buses buses = new Gestionar_buses();
+            buses.setVisible(true);
+        }
+    
+      
+    }//GEN-LAST:event_btnGuardarCambiosActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

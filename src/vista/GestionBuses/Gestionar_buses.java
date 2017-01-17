@@ -19,8 +19,8 @@ import model.Bus;
  * @author Estibenson
  */
 public class Gestionar_buses extends javax.swing.JFrame {
-    
-    Object[] opcionesEliminarBus = {"Si, Eliminar Bus","No, Cancelar"};
+
+    Object[] opcionesEliminarBus = {"Si, Eliminar Bus", "No, Cancelar"};
     private EntityManagerFactory emf;
     private EntityManager em;
     private EntityTransaction tx;
@@ -35,12 +35,12 @@ public class Gestionar_buses extends javax.swing.JFrame {
         tx = em.getTransaction();
         initComponents();
         setLocationRelativeTo(null);
-        
+
         buses = em.createNamedQuery("Bus.findAll").getResultList();
 
-        Object[] columnNames = {"Vial", "Placa", "Modelo", "Clase", "Marca","Capacidad","No. Motor","No. Chasis","Fecha de Matricula","Observaciones","Estado","Clase de servicio"};
+        Object[] columnNames = {"Vial", "Placa", "Modelo", "Clase", "Marca", "Capacidad", "No. Motor", "No. Chasis", "Fecha de Matricula", "Observaciones", "Estado", "Clase de servicio"};
         DefaultTableModel model = new DefaultTableModel(new Object[0][0], columnNames);
-        for (Bus  bus: buses) {
+        for (Bus bus : buses) {
             Object[] o = new Object[12];
             o[0] = bus.getVial();
             o[1] = bus.getPlaca();
@@ -53,7 +53,7 @@ public class Gestionar_buses extends javax.swing.JFrame {
             o[8] = bus.getFechaMatricula();
             o[9] = bus.getObservaciones();
             o[10] = bus.getEstado();
-            o[11] = bus.getClaseServicio();         
+            o[11] = bus.getClaseServicio();
             model.addRow(o);
         }
         tabBusesListaDeBuses.setModel(model);
@@ -118,6 +118,11 @@ public class Gestionar_buses extends javax.swing.JFrame {
         btnGestBusIrAEditarBus.setBorderPainted(false);
         btnGestBusIrAEditarBus.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnGestBusIrAEditarBus.setFocusPainted(false);
+        btnGestBusIrAEditarBus.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnGestBusIrAEditarBusActionPerformed(evt);
+            }
+        });
 
         jLabel1.setText("Digite Busqueda:");
 
@@ -269,7 +274,7 @@ public class Gestionar_buses extends javax.swing.JFrame {
 
     private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
         // TODO add your handling code here:
-        String id =(String)tabBusesListaDeBuses.getValueAt(tabBusesListaDeBuses.getSelectedRow(), 0);
+        String id = (String) tabBusesListaDeBuses.getValueAt(tabBusesListaDeBuses.getSelectedRow(), 0);
     }//GEN-LAST:event_jTextField1ActionPerformed
 
     private void btnGestBusIrARegistrarBusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGestBusIrARegistrarBusActionPerformed
@@ -280,14 +285,21 @@ public class Gestionar_buses extends javax.swing.JFrame {
     }//GEN-LAST:event_btnGestBusIrARegistrarBusActionPerformed
 
     private void btnGestBusIrAEliminarBusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGestBusIrAEliminarBusActionPerformed
-        int n = JOptionPane.showOptionDialog(this, "Seguro desea eliminar el bus?", "eliminar bus", JOptionPane.YES_NO_CANCEL_OPTION, WIDTH, null, opcionesEliminarBus, opcionesEliminarBus[1]);
-        if (n==0) {
-            // eliminar bus
-            JOptionPane.showMessageDialog(this, "Conductor eliminado exitosamente");
-            
-        } 
-            
-        
+        int row = tabBusesListaDeBuses.getSelectedRow();
+
+        if (row != -1) {    //fila seleccionada
+            Bus p = buses.get(row);
+            int n = JOptionPane.showOptionDialog(this, "Seguro desea eliminar el BUs?", "Eliminar Bus", JOptionPane.YES_NO_CANCEL_OPTION, WIDTH, null, opcionesEliminarBus, opcionesEliminarBus[1]);
+            if (n == 0) {
+                // eliminar bus           
+                tx.begin();
+                em.remove(em.merge(p));
+                tx.commit();
+                JOptionPane.showMessageDialog(this, "Bus eliminado exitosamente");
+            }
+        } else { // no se selecciono ninguna fila
+            JOptionPane.showMessageDialog(this, "Debe Seleccionar un bus para eliminar.", "Ningun bus seleccionado", JOptionPane.ERROR_MESSAGE);
+        }
     }//GEN-LAST:event_btnGestBusIrAEliminarBusActionPerformed
 
     private void btnGestionBusesIrAVerDocumentosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGestionBusesIrAVerDocumentosActionPerformed
@@ -295,8 +307,21 @@ public class Gestionar_buses extends javax.swing.JFrame {
         DocumentosBus documentos = new DocumentosBus();
         documentos.setVisible(true);
         this.setVisible(false);
-        
+
     }//GEN-LAST:event_btnGestionBusesIrAVerDocumentosActionPerformed
+
+    private void btnGestBusIrAEditarBusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGestBusIrAEditarBusActionPerformed
+        int row = tabBusesListaDeBuses.getSelectedRow();
+
+        if (row != -1) {    //fila seleccionada
+            Bus p = buses.get(row);
+            Registro_de_Buses registro = new Registro_de_Buses(emf, em, tx, p);
+            registro.setVisible(true);
+            this.setVisible(false);
+        } else { // no se selecciono ninguna fila
+            JOptionPane.showMessageDialog(this, "Debe Seleccionar un bus para elditar.", "Ningun bus seleccionado", JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_btnGestBusIrAEditarBusActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
