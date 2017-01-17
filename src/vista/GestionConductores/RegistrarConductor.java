@@ -46,6 +46,7 @@ public class RegistrarConductor extends javax.swing.JFrame {
         this.em = em;
         this.tx = tx;        
         initComponents();
+        btnCondEditGuardarCambios.setVisible(false);
         this.setLocationRelativeTo(null);
         
     }

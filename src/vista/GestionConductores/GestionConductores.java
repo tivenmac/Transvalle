@@ -37,6 +37,7 @@ public class GestionConductores extends javax.swing.JFrame {
         tx = em.getTransaction();
         initComponents();
         this.setLocationRelativeTo(null);
+        
         lista = em.createNamedQuery("Persona.findAll").getResultList();
 
         Object[] columnNames = {"No. Documento", "Nombre", "Apellidos", "Direccion", "Fecha de Nacimiento"};

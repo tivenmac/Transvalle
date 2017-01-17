@@ -5,7 +5,14 @@
  */
 package vista.GestionBuses;
 
+import java.util.List;
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.EntityTransaction;
+import javax.persistence.Persistence;
 import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+import model.Bus;
 
 /**
  *
@@ -14,13 +21,42 @@ import javax.swing.JOptionPane;
 public class Gestionar_buses extends javax.swing.JFrame {
     
     Object[] opcionesEliminarBus = {"Si, Eliminar Bus","No, Cancelar"};
+    private EntityManagerFactory emf;
+    private EntityManager em;
+    private EntityTransaction tx;
+    List<Bus> buses;
 
     /**
      * Creates new form Gestionar_buses
      */
     public Gestionar_buses() {
+        emf = Persistence.createEntityManagerFactory("TransvallePU");
+        em = emf.createEntityManager();
+        tx = em.getTransaction();
         initComponents();
         setLocationRelativeTo(null);
+        
+        buses = em.createNamedQuery("Bus.findAll").getResultList();
+
+        Object[] columnNames = {"Vial", "Placa", "Modelo", "Clase", "Marca","Capacidad","No. Motor","No. Chasis","Fecha de Matricula","Observaciones","Estado","Clase de servicio"};
+        DefaultTableModel model = new DefaultTableModel(new Object[0][0], columnNames);
+        for (Bus  bus: buses) {
+            Object[] o = new Object[12];
+            o[0] = bus.getVial();
+            o[1] = bus.getPlaca();
+            o[2] = bus.getModelo();
+            o[3] = bus.getClase();
+            o[4] = bus.getMarca();
+            o[5] = bus.getCapacidad();
+            o[6] = bus.getNumeroMotor();
+            o[7] = bus.getNumeroChasis();
+            o[8] = bus.getFechaMatricula();
+            o[9] = bus.getObservaciones();
+            o[10] = bus.getEstado();
+            o[11] = bus.getClaseServicio();         
+            model.addRow(o);
+        }
+        tabBusesListaDeBuses.setModel(model);
     }
 
     /**
@@ -49,21 +85,39 @@ public class Gestionar_buses extends javax.swing.JFrame {
 
         setTitle("Gestionar Buses");
 
+        btnGestBusIrARegistrarBus.setBackground(new java.awt.Color(0, 204, 255));
+        btnGestBusIrARegistrarBus.setForeground(new java.awt.Color(255, 255, 255));
         btnGestBusIrARegistrarBus.setText("Registar Bus");
+        btnGestBusIrARegistrarBus.setBorder(null);
+        btnGestBusIrARegistrarBus.setBorderPainted(false);
+        btnGestBusIrARegistrarBus.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnGestBusIrARegistrarBus.setFocusPainted(false);
         btnGestBusIrARegistrarBus.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnGestBusIrARegistrarBusActionPerformed(evt);
             }
         });
 
+        btnGestBusSalir.setBackground(new java.awt.Color(0, 204, 255));
+        btnGestBusSalir.setForeground(new java.awt.Color(255, 255, 255));
         btnGestBusSalir.setText("Salir");
+        btnGestBusSalir.setBorder(null);
+        btnGestBusSalir.setBorderPainted(false);
+        btnGestBusSalir.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnGestBusSalir.setFocusPainted(false);
         btnGestBusSalir.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnGestBusSalirActionPerformed(evt);
             }
         });
 
+        btnGestBusIrAEditarBus.setBackground(new java.awt.Color(0, 204, 255));
+        btnGestBusIrAEditarBus.setForeground(new java.awt.Color(255, 255, 255));
         btnGestBusIrAEditarBus.setText("Editar Bus");
+        btnGestBusIrAEditarBus.setBorder(null);
+        btnGestBusIrAEditarBus.setBorderPainted(false);
+        btnGestBusIrAEditarBus.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnGestBusIrAEditarBus.setFocusPainted(false);
 
         jLabel1.setText("Digite Busqueda:");
 
@@ -79,7 +133,12 @@ public class Gestionar_buses extends javax.swing.JFrame {
 
         ConsultaBus_comboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Placa", "Vial" }));
 
+        btnGestionBusesIrAVerDocumentos.setBackground(new java.awt.Color(0, 204, 255));
+        btnGestionBusesIrAVerDocumentos.setForeground(new java.awt.Color(255, 255, 255));
         btnGestionBusesIrAVerDocumentos.setText("Ver documentos");
+        btnGestionBusesIrAVerDocumentos.setBorder(null);
+        btnGestionBusesIrAVerDocumentos.setBorderPainted(false);
+        btnGestionBusesIrAVerDocumentos.setFocusPainted(false);
         btnGestionBusesIrAVerDocumentos.setName("btnGestionBusesIrAVerDocumentos"); // NOI18N
         btnGestionBusesIrAVerDocumentos.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -106,11 +165,9 @@ public class Gestionar_buses extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
-        tabBusesListaDeBuses.setColumnSelectionAllowed(true);
         tabBusesListaDeBuses.setRowHeight(17);
         tabBusesListaDeBuses.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         jScrollPane1.setViewportView(tabBusesListaDeBuses);
-        tabBusesListaDeBuses.getColumnModel().getSelectionModel().setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         if (tabBusesListaDeBuses.getColumnModel().getColumnCount() > 0) {
             tabBusesListaDeBuses.getColumnModel().getColumn(0).setPreferredWidth(80);
             tabBusesListaDeBuses.getColumnModel().getColumn(1).setPreferredWidth(120);
@@ -120,14 +177,26 @@ public class Gestionar_buses extends javax.swing.JFrame {
 
         jScrollPane2.setViewportView(jScrollPane1);
 
+        btnGestBusIrAEliminarBus.setBackground(new java.awt.Color(0, 204, 255));
+        btnGestBusIrAEliminarBus.setForeground(new java.awt.Color(255, 255, 255));
         btnGestBusIrAEliminarBus.setText("Eliminar Bus");
+        btnGestBusIrAEliminarBus.setBorder(null);
+        btnGestBusIrAEliminarBus.setBorderPainted(false);
+        btnGestBusIrAEliminarBus.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnGestBusIrAEliminarBus.setFocusPainted(false);
         btnGestBusIrAEliminarBus.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnGestBusIrAEliminarBusActionPerformed(evt);
             }
         });
 
-        jButton1.setText("imprimir Bus");
+        jButton1.setBackground(new java.awt.Color(0, 204, 255));
+        jButton1.setForeground(new java.awt.Color(255, 255, 255));
+        jButton1.setText("Imprimir Bus");
+        jButton1.setBorder(null);
+        jButton1.setBorderPainted(false);
+        jButton1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jButton1.setFocusPainted(false);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -153,16 +222,17 @@ public class Gestionar_buses extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addGap(31, 31, 31)
                         .addComponent(btnGestionBusesIrAVerDocumentos)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnGestBusIrAEliminarBus)
-                        .addGap(70, 70, 70)
-                        .addComponent(jButton1)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 244, Short.MAX_VALUE)
-                        .addComponent(btnGestBusIrARegistrarBus)
-                        .addGap(18, 18, 18)
-                        .addComponent(btnGestBusIrAEditarBus)
-                        .addGap(18, 18, 18)
-                        .addComponent(btnGestBusSalir)))
+                        .addGap(31, 31, 31)
+                        .addComponent(btnGestBusIrAEliminarBus, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(34, 34, 34)
+                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 208, Short.MAX_VALUE)
+                        .addComponent(btnGestBusIrARegistrarBus, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(46, 46, 46)
+                        .addComponent(btnGestBusIrAEditarBus, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(40, 40, 40)
+                        .addComponent(btnGestBusSalir, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(20, 20, 20)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -181,13 +251,13 @@ public class Gestionar_buses extends javax.swing.JFrame {
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 225, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(33, 33, 33)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnGestionBusesIrAVerDocumentos)
-                    .addComponent(btnGestBusIrARegistrarBus)
-                    .addComponent(btnGestBusIrAEditarBus)
-                    .addComponent(btnGestBusSalir)
-                    .addComponent(btnGestBusIrAEliminarBus)
-                    .addComponent(jButton1))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(btnGestionBusesIrAVerDocumentos, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnGestBusIrARegistrarBus, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnGestBusIrAEditarBus, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnGestBusSalir, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnGestBusIrAEliminarBus, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(40, Short.MAX_VALUE))
         );
 
         pack();
@@ -203,7 +273,7 @@ public class Gestionar_buses extends javax.swing.JFrame {
     }//GEN-LAST:event_jTextField1ActionPerformed
 
     private void btnGestBusIrARegistrarBusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGestBusIrARegistrarBusActionPerformed
-        Registro_de_Buses registro = new Registro_de_Buses();
+        Registro_de_Buses registro = new Registro_de_Buses(emf, em, tx);
         registro.setVisible(true);
         this.setVisible(false);
         // TODO add your handling code here:
