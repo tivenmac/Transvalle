@@ -6,23 +6,28 @@
 package vista.GestionConductores;
 
 import static java.awt.image.ImageObserver.WIDTH;
+import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
 import javax.persistence.Persistence;
 import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+import model.Persona;
 
 /**
  *
  * @author Estibenson
  */
 public class GestionConductores extends javax.swing.JFrame {
-    
+
     private EntityManagerFactory emf;
     private EntityManager em;
     private EntityTransaction tx;
+    List<Persona> lista;
 
-    Object[] opcionesEliminarCond = {"Si, Eliminar Conductor","No, Cancelar"};
+    Object[] opcionesEliminarCond = {"Si, Eliminar Conductor", "No, Cancelar"};
+
     /**
      * Creates new form GestionConductores
      */
@@ -32,6 +37,21 @@ public class GestionConductores extends javax.swing.JFrame {
         tx = em.getTransaction();
         initComponents();
         this.setLocationRelativeTo(null);
+        lista = em.createNamedQuery("Persona.findAll").getResultList();
+
+        Object[] columnNames = {"No. Documento", "Nombre", "Apellidos", "Direccion", "Fecha de Nacimiento"};
+        DefaultTableModel model = new DefaultTableModel(new Object[0][0], columnNames);
+        for (Persona persona : lista) {
+            Object[] o = new Object[5];
+            o[0] = persona.getCedula();
+            o[1] = persona.getNombre();
+            o[2] = persona.getApellido();
+            o[3] = persona.getDirección();
+            o[4] = persona.getFechaNacimiento();
+            model.addRow(o);
+        }
+        tablaConductores.setModel(model);
+
     }
 
     /**
@@ -46,7 +66,7 @@ public class GestionConductores extends javax.swing.JFrame {
         jButton1 = new javax.swing.JButton();
         jScrollPane2 = new javax.swing.JScrollPane();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        tablaConductores = new javax.swing.JTable();
         jTextField1 = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
         jRadioButton1 = new javax.swing.JRadioButton();
@@ -64,7 +84,7 @@ public class GestionConductores extends javax.swing.JFrame {
         setTitle("Gestión de Conductores");
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        tablaConductores.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null, null},
                 {null, null, null, null, null},
@@ -83,7 +103,8 @@ public class GestionConductores extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
-        jScrollPane1.setViewportView(jTable1);
+        tablaConductores.getTableHeader().setReorderingAllowed(false);
+        jScrollPane1.setViewportView(tablaConductores);
 
         jScrollPane2.setViewportView(jScrollPane1);
 
@@ -126,6 +147,11 @@ public class GestionConductores extends javax.swing.JFrame {
         btnCondEditar.setBorder(null);
         btnCondEditar.setBorderPainted(false);
         btnCondEditar.setFocusPainted(false);
+        btnCondEditar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCondEditarActionPerformed(evt);
+            }
+        });
         getContentPane().add(btnCondEditar, new org.netbeans.lib.awtextra.AbsoluteConstraints(640, 440, 130, 40));
 
         btnCondEliminar.setBackground(new java.awt.Color(0, 204, 255));
@@ -192,12 +218,36 @@ public class GestionConductores extends javax.swing.JFrame {
     }//GEN-LAST:event_btnCondSalirActionPerformed
 
     private void btnCondEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCondEliminarActionPerformed
-        int n = JOptionPane.showOptionDialog(this, "Seguro desea eliminar el Conductor?", "Eliminar Conductor", JOptionPane.YES_NO_CANCEL_OPTION, WIDTH, null,opcionesEliminarCond, opcionesEliminarCond[1]);
-        if (n==0) {
-            // eliminar conductor
+        int row = tablaConductores.getSelectedRow();        
+        if (row != -1) {    //fila seleccionada
+            Persona p = lista.get(row);
+             int n = JOptionPane.showOptionDialog(this, "Seguro desea eliminar el Conductor?", "Eliminar Conductor", JOptionPane.YES_NO_CANCEL_OPTION, WIDTH, null, opcionesEliminarCond, opcionesEliminarCond[1]);
+        if (n == 0) {
+            // eliminar conductor           
+            tx.begin();
+            em.remove(em.merge(p));
+            tx.commit();
             JOptionPane.showMessageDialog(this, "Conductor eliminado exitosamente");
         }
+        } else { // no se selecciono ninguna fila
+            JOptionPane.showMessageDialog(this, "Debe Seleccionar un conductor para editar.", "Ningun conductor seleccionado", JOptionPane.ERROR_MESSAGE);
+        }
+       
     }//GEN-LAST:event_btnCondEliminarActionPerformed
+
+    private void btnCondEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCondEditarActionPerformed
+        int row = tablaConductores.getSelectedRow();
+        if (row != -1) {    //fila seleccionada
+            Persona p = lista.get(row);
+            RegistrarConductor registrar = new RegistrarConductor(emf, em, tx, p);
+            registrar.setVisible(true);
+            this.setVisible(false);
+        } else { // no se selecciono ninguna fila
+            JOptionPane.showMessageDialog(this, "Debe Seleccionar un conductor para editar.", "Ningun conductor seleccionado", JOptionPane.ERROR_MESSAGE);
+        }
+
+
+    }//GEN-LAST:event_btnCondEditarActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -214,7 +264,7 @@ public class GestionConductores extends javax.swing.JFrame {
     private javax.swing.JRadioButton jRadioButton2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JTable jTable1;
     private javax.swing.JTextField jTextField1;
+    private javax.swing.JTable tablaConductores;
     // End of variables declaration//GEN-END:variables
 }
