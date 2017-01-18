@@ -12,6 +12,7 @@ import javax.persistence.EntityTransaction;
 import javax.persistence.Persistence;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableColumnModel;
 import model.Bus;
 
 /**
@@ -56,7 +57,7 @@ public class Gestionar_buses extends javax.swing.JFrame {
             o[11] = bus.getClaseServicio();
             model.addRow(o);
         }
-        tabBusesListaDeBuses.setModel(model);
+        tabBusesListaDeBuses.setModel(model);              
     }
 
     /**
@@ -285,7 +286,7 @@ public class Gestionar_buses extends javax.swing.JFrame {
     }//GEN-LAST:event_btnGestBusIrARegistrarBusActionPerformed
 
     private void btnGestBusIrAEliminarBusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGestBusIrAEliminarBusActionPerformed
-        int row = tabBusesListaDeBuses.getSelectedRow();
+               int row = tabBusesListaDeBuses.getSelectedRow();
 
         if (row != -1) {    //fila seleccionada
             Bus p = buses.get(row);
