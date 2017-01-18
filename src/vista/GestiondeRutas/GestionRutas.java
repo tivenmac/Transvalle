@@ -212,13 +212,14 @@ public class GestionRutas extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(36, 36, 36)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jRadioButton1)
-                    .addComponent(jRadioButton2)
-                    .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(jLabel1)
-                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jRadioButton1)
+                        .addComponent(jRadioButton2)
+                        .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(71, 71, 71)
                 .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 253, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 81, Short.MAX_VALUE)
@@ -240,7 +241,14 @@ public class GestionRutas extends javax.swing.JFrame {
     }//GEN-LAST:event_btnRutaIrAgregarActionPerformed
 
     private void btnRutaIrAConsultarRutaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRutaIrAConsultarRutaActionPerformed
-        
+        int row = tablaRutaPrincipal.getSelectedRow();
+        if (row != -1) {    //fila seleccionada
+            Ruta p = rutas.get(row);
+            DetalleRuta detalle = new DetalleRuta(p);
+            detalle.setVisible(true);
+        }else { // no se selecciono ninguna fila
+            JOptionPane.showMessageDialog(this, "Debe Seleccionar una ruta.", "Ninguna ruta seleccionada", JOptionPane.ERROR_MESSAGE);
+        }
     }//GEN-LAST:event_btnRutaIrAConsultarRutaActionPerformed
 
     private void btnRutaEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRutaEliminarActionPerformed
@@ -258,7 +266,7 @@ int row = tablaRutaPrincipal.getSelectedRow();
                 JOptionPane.showMessageDialog(this, "Ruta eliminada exitosamente");
             }
         } else { // no se selecciono ninguna fila
-            JOptionPane.showMessageDialog(this, "Debe Seleccionar un bus para eliminar.", "Ningun bus seleccionado", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Debe Seleccionar una ruta para eliminar.", "Ninguna ruta seleccionada", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_btnRutaEliminarActionPerformed
 
@@ -276,8 +284,6 @@ int row = tablaRutaPrincipal.getSelectedRow();
     private javax.swing.JLabel jLabel1;
     private javax.swing.JRadioButton jRadioButton1;
     private javax.swing.JRadioButton jRadioButton2;
-    private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JTextField jTextField1;
     private javax.swing.JTable tablaRutaPrincipal;

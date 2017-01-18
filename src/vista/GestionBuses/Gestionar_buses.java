@@ -10,6 +10,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
 import javax.persistence.Persistence;
+import javax.persistence.TypedQuery;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumnModel;
@@ -26,6 +27,7 @@ public class Gestionar_buses extends javax.swing.JFrame {
     private EntityManager em;
     private EntityTransaction tx;
     List<Bus> buses;
+    DefaultTableModel model;
 
     /**
      * Creates new form Gestionar_buses
@@ -40,7 +42,7 @@ public class Gestionar_buses extends javax.swing.JFrame {
         buses = em.createNamedQuery("Bus.findAll").getResultList();
 
         Object[] columnNames = {"Vial", "Placa", "Modelo", "Clase", "Marca", "Capacidad", "No. Motor", "No. Chasis", "Fecha de Matricula", "Observaciones", "Estado", "Clase de servicio"};
-        DefaultTableModel model = new DefaultTableModel(new Object[0][0], columnNames);
+        model = new DefaultTableModel(new Object[0][0], columnNames);
         for (Bus bus : buses) {
             Object[] o = new Object[12];
             o[0] = bus.getVial();
@@ -73,16 +75,17 @@ public class Gestionar_buses extends javax.swing.JFrame {
         btnGestBusSalir = new javax.swing.JButton();
         btnGestBusIrAEditarBus = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
-        jButton4 = new javax.swing.JButton();
+        txtBuscar = new javax.swing.JTextField();
+        btnBuscar = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
-        ConsultaBus_comboBox = new javax.swing.JComboBox<>();
+        comboboxConsultaBus = new javax.swing.JComboBox<>();
         btnGestionBusesIrAVerDocumentos = new javax.swing.JButton();
         jScrollPane2 = new javax.swing.JScrollPane();
         jScrollPane1 = new javax.swing.JScrollPane();
         tabBusesListaDeBuses = new javax.swing.JTable();
         btnGestBusIrAEliminarBus = new javax.swing.JButton();
         jButton1 = new javax.swing.JButton();
+        btnVerTodos = new javax.swing.JButton();
 
         setTitle("Gestionar Buses");
 
@@ -127,17 +130,26 @@ public class Gestionar_buses extends javax.swing.JFrame {
 
         jLabel1.setText("Digite Busqueda:");
 
-        jTextField1.addActionListener(new java.awt.event.ActionListener() {
+        txtBuscar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField1ActionPerformed(evt);
+                txtBuscarActionPerformed(evt);
             }
         });
 
-        jButton4.setText("Buscar");
+        btnBuscar.setBackground(new java.awt.Color(0, 204, 255));
+        btnBuscar.setForeground(new java.awt.Color(255, 255, 255));
+        btnBuscar.setText("Buscar");
+        btnBuscar.setBorder(null);
+        btnBuscar.setBorderPainted(false);
+        btnBuscar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnBuscarActionPerformed(evt);
+            }
+        });
 
         jLabel2.setText("Consultar por:");
 
-        ConsultaBus_comboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Placa", "Vial" }));
+        comboboxConsultaBus.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Placa", "Vial" }));
 
         btnGestionBusesIrAVerDocumentos.setBackground(new java.awt.Color(0, 204, 255));
         btnGestionBusesIrAVerDocumentos.setForeground(new java.awt.Color(255, 255, 255));
@@ -204,6 +216,17 @@ public class Gestionar_buses extends javax.swing.JFrame {
         jButton1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jButton1.setFocusPainted(false);
 
+        btnVerTodos.setBackground(new java.awt.Color(0, 204, 255));
+        btnVerTodos.setForeground(new java.awt.Color(255, 255, 255));
+        btnVerTodos.setText("Ver todos");
+        btnVerTodos.setBorder(null);
+        btnVerTodos.setBorderPainted(false);
+        btnVerTodos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnVerTodosActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -216,13 +239,15 @@ public class Gestionar_buses extends javax.swing.JFrame {
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(ConsultaBus_comboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(comboboxConsultaBus, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 213, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jButton4)))
+                                .addComponent(txtBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 213, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(btnBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(btnVerTodos, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addComponent(jScrollPane2, javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(layout.createSequentialGroup()
@@ -247,12 +272,13 @@ public class Gestionar_buses extends javax.swing.JFrame {
                 .addGap(22, 22, 22)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
-                    .addComponent(ConsultaBus_comboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(comboboxConsultaBus, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton4))
+                    .addComponent(txtBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnVerTodos, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 225, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(33, 33, 33)
@@ -263,7 +289,7 @@ public class Gestionar_buses extends javax.swing.JFrame {
                     .addComponent(btnGestBusSalir, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnGestBusIrAEliminarBus, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(40, Short.MAX_VALUE))
+                .addContainerGap(43, Short.MAX_VALUE))
         );
 
         pack();
@@ -273,10 +299,10 @@ public class Gestionar_buses extends javax.swing.JFrame {
         this.setVisible(false);
     }//GEN-LAST:event_btnGestBusSalirActionPerformed
 
-    private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
+    private void txtBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtBuscarActionPerformed
         // TODO add your handling code here:
         String id = (String) tabBusesListaDeBuses.getValueAt(tabBusesListaDeBuses.getSelectedRow(), 0);
-    }//GEN-LAST:event_jTextField1ActionPerformed
+    }//GEN-LAST:event_txtBuscarActionPerformed
 
     private void btnGestBusIrARegistrarBusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGestBusIrARegistrarBusActionPerformed
         Registro_de_Buses registro = new Registro_de_Buses(emf, em, tx);
@@ -324,21 +350,112 @@ public class Gestionar_buses extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btnGestBusIrAEditarBusActionPerformed
 
+    private void btnVerTodosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVerTodosActionPerformed
+        buses = em.createNamedQuery("Bus.findAll").getResultList();
+
+        
+        for (Bus bus : buses) {
+            Object[] o = new Object[12];
+            o[0] = bus.getVial();
+            o[1] = bus.getPlaca();
+            o[2] = bus.getModelo();
+            o[3] = bus.getClase();
+            o[4] = bus.getMarca();
+            o[5] = bus.getCapacidad();
+            o[6] = bus.getNumeroMotor();
+            o[7] = bus.getNumeroChasis();
+            o[8] = bus.getFechaMatricula();
+            o[9] = bus.getObservaciones();
+            o[10] = bus.getEstado();
+            o[11] = bus.getClaseServicio();
+            model.addRow(o);
+        }
+    }//GEN-LAST:event_btnVerTodosActionPerformed
+
+    private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
+        String s = (String)comboboxConsultaBus.getSelectedItem();
+        if (txtBuscar.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Debe llenar el campo con un vial o numero de placa válido para buscar el bus.", "Falta vial o placa", JOptionPane.ERROR_MESSAGE);
+
+        } else if (s.equals("Placa")) {  //Buscar por placa
+            String placa = txtBuscar.getText();
+            TypedQuery a = em.createNamedQuery("Bus.findByPlaca", Bus.class);
+            a.setParameter("placa", placa);
+
+            buses = a.getResultList();
+
+            if (buses.isEmpty()) {
+
+                JOptionPane.showMessageDialog(this, "No existe el Bus.", "Error", JOptionPane.ERROR_MESSAGE);
+
+            } else {
+                model.setRowCount(0);
+                for (Bus bus : buses) {
+            Object[] o = new Object[12];
+            o[0] = bus.getVial();
+            o[1] = bus.getPlaca();
+            o[2] = bus.getModelo();
+            o[3] = bus.getClase();
+            o[4] = bus.getMarca();
+            o[5] = bus.getCapacidad();
+            o[6] = bus.getNumeroMotor();
+            o[7] = bus.getNumeroChasis();
+            o[8] = bus.getFechaMatricula();
+            o[9] = bus.getObservaciones();
+            o[10] = bus.getEstado();
+            o[11] = bus.getClaseServicio();
+            model.addRow(o);
+        }
+            }
+        } else if (s.equals("Vial")) {
+            String vial = txtBuscar.getText();
+            TypedQuery a = em.createNamedQuery("Bus.findByVial", Bus.class);
+            a.setParameter("vial", vial);
+
+            buses = a.getResultList();
+
+            if (buses.isEmpty()) {
+
+                JOptionPane.showMessageDialog(this, "No existe el Bus.", "Error", JOptionPane.ERROR_MESSAGE);
+
+            } else {
+                model.setRowCount(0);
+                for (Bus bus : buses) {
+            Object[] o = new Object[12];
+            o[0] = bus.getVial();
+            o[1] = bus.getPlaca();
+            o[2] = bus.getModelo();
+            o[3] = bus.getClase();
+            o[4] = bus.getMarca();
+            o[5] = bus.getCapacidad();
+            o[6] = bus.getNumeroMotor();
+            o[7] = bus.getNumeroChasis();
+            o[8] = bus.getFechaMatricula();
+            o[9] = bus.getObservaciones();
+            o[10] = bus.getEstado();
+            o[11] = bus.getClaseServicio();
+            model.addRow(o);
+        }
+            }
+        }
+    }//GEN-LAST:event_btnBuscarActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JComboBox<String> ConsultaBus_comboBox;
+    private javax.swing.JButton btnBuscar;
     private javax.swing.JButton btnGestBusIrAEditarBus;
     private javax.swing.JButton btnGestBusIrAEliminarBus;
     private javax.swing.JButton btnGestBusIrARegistrarBus;
     private javax.swing.JButton btnGestBusSalir;
     private javax.swing.JButton btnGestionBusesIrAVerDocumentos;
+    private javax.swing.JButton btnVerTodos;
+    private javax.swing.JComboBox<String> comboboxConsultaBus;
     private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton4;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JTextField jTextField1;
     private javax.swing.JTable tabBusesListaDeBuses;
+    private javax.swing.JTextField txtBuscar;
     // End of variables declaration//GEN-END:variables
 }
