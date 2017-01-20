@@ -23,6 +23,28 @@ public class RegistroRuta extends javax.swing.JFrame {
     private EntityTransaction tx;
     Ruta ruta;
 
+    public RegistroRuta(EntityManager em, EntityTransaction tx, Ruta ruta) {
+        initComponents();
+        this.setLocationRelativeTo(null);
+        btnGuardar.setLocation(btnTrazarRuta.getLocation());
+        btnTrazarRuta.setVisible(false);
+        this.em = em;
+        this.tx = tx;
+        this.ruta = ruta;
+        txtCapacidad.setText(String.valueOf(ruta.getCapacidad()));
+        txtFrecuencia.setText(String.valueOf(ruta.getFrecuencia()));
+        txtPlanillaControl.setText(String.valueOf(ruta.getPlanillaControl()));
+        txtTiemRecorrido.setText(String.valueOf(ruta.getTiempoRecorrido()));
+        txtGabela.setText(String.valueOf(ruta.getGabela()));
+        
+        txtNombre.setText(ruta.getNombre());
+        txtDescripcion.setText(ruta.getDescripcion());
+        txtDescSalida.setText(ruta.getDescripcionSalida());
+        txtDescRetorno.setText(ruta.getDescripcionRetorno());
+        txtLongitud.setText(ruta.getLongitud());
+        
+    }
+
     public RegistroRuta(EntityManager em, EntityTransaction tx) {
         initComponents();
         this.setLocationRelativeTo(null);
@@ -118,6 +140,11 @@ public class RegistroRuta extends javax.swing.JFrame {
         btnGuardar.setText("Guardar");
         btnGuardar.setBorder(null);
         btnGuardar.setBorderPainted(false);
+        btnGuardar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnGuardarActionPerformed(evt);
+            }
+        });
 
         btnTrazarRuta.setBackground(new java.awt.Color(0, 204, 255));
         btnTrazarRuta.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
@@ -209,7 +236,7 @@ public class RegistroRuta extends javax.swing.JFrame {
                     .addComponent(txtPlanillaControl, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel2))
                 .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(txtCapacidad, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel3))
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -287,6 +314,27 @@ public class RegistroRuta extends javax.swing.JFrame {
 
         }
     }//GEN-LAST:event_btnTrazarRutaActionPerformed
+
+    private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
+        
+            ruta.setCapacidad(Integer.parseInt(txtCapacidad.getText()));
+            ruta.setDescripcion(txtDescripcion.getText());
+            ruta.setDescripcionRetorno(txtDescRetorno.getText());
+            ruta.setDescripcionSalida(txtDescSalida.getText());
+            ruta.setFrecuencia(Integer.parseInt(txtFrecuencia.getText()));
+            ruta.setGabela(Integer.parseInt(txtGabela.getText()));
+            ruta.setLongitud(txtLongitud.getText());
+            ruta.setPlanillaControl(Integer.parseInt(txtPlanillaControl.getText()));
+            ruta.setNombre(txtNombre.getText());
+            ruta.setTiempoRecorrido(Integer.parseInt(txtTiemRecorrido.getText()));
+            tx.begin();
+            em.merge(ruta);
+            tx.commit();
+            JOptionPane.showMessageDialog(this, "Se guardaron los cambios!!!!");
+            this.setVisible(false);
+            GestionRutas gestion = new GestionRutas();
+            gestion.setVisible(true);
+    }//GEN-LAST:event_btnGuardarActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

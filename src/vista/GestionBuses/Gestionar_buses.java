@@ -37,7 +37,7 @@ public class Gestionar_buses extends javax.swing.JFrame {
         em = emf.createEntityManager();
         tx = em.getTransaction();
         initComponents();
-        setLocationRelativeTo(null);
+        setLocationRelativeTo(null);  // centrar ventana
 
         buses = em.createNamedQuery("Bus.findAll").getResultList();
 

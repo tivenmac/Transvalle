@@ -1,21 +1,62 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package vista.creacionPDespacho;
 
-/**
- *
- * @author ESTIBENSON MAESTRE
- */
+import java.text.SimpleDateFormat;
+import java.util.Arrays;
+import java.util.Calendar;
+import java.util.List;
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.EntityTransaction;
+import javax.persistence.Persistence;
+import javax.swing.table.DefaultTableModel;
+import model.Bus;
+import planilla.CrearPlanilla;
+
 public class CreaciónPDespacho extends javax.swing.JFrame {
 
-    /**
-     * Creates new form CreaciónPDespacho
-     */
+    int mes;
+    String[] namesOfDays = {"","Domingo","Lunes","Martes","Miercoles","Jueves","Viernes","Sabado"};
+    Calendar cal;
+    private EntityManagerFactory emf;
+    private EntityManager em;
+    private EntityTransaction tx;
+    List<Bus> busesLista;
+    
     public CreaciónPDespacho() {
-        initComponents();
+        emf = Persistence.createEntityManagerFactory("TransvallePU");
+        em = emf.createEntityManager();
+        tx = em.getTransaction();
+        cal = Calendar.getInstance();
+        mes = 0;
+        initComponents();                
+        setLocationRelativeTo(null); // centrar ventana
+        llenarTabla(mes);  //llena tabla con dias del mes   
+        
+        int[] buses = new int[15];
+        buses[0] = 0;
+        busesLista = em.createNamedQuery("Bus.findAll").getResultList();
+         
+        for (int i = 1; i < 15; i++) {
+            buses[i] = Integer.parseInt(busesLista.get(i).getVial());
+        }
+        
+        
+        CrearPlanilla planilla = new CrearPlanilla();
+        int[][] mat = planilla.planillaDespacho(buses, ERROR, mes+1);
+       
+       int[][] copia = new int[mat[0].length][mat.length];  //14 filas y 31 columnas
+        
+        for (int i = 0; i < copia.length; i++) {
+            for (int j = 0; j < copia[i].length; j++) {
+                copia[i][j] = mat[j][i];
+                System.out.print(copia[i][j] + " ");                
+            }
+            System.out.print("\n");
+        }
+        
+        
+        
+        
     }
 
     /**
@@ -29,33 +70,33 @@ public class CreaciónPDespacho extends javax.swing.JFrame {
 
         jScrollPane2 = new javax.swing.JScrollPane();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        tablaDespacho = new javax.swing.JTable();
         jScrollPane3 = new javax.swing.JScrollPane();
         jTable2 = new javax.swing.JTable();
-        jScrollPane4 = new javax.swing.JScrollPane();
-        jScrollPane5 = new javax.swing.JScrollPane();
-        jTable4 = new javax.swing.JTable();
+        meses = new javax.swing.JComboBox<>();
+        jButton1 = new javax.swing.JButton();
 
         setTitle("Gstión de Planillas de Despacho");
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        tablaDespacho.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {"Ruta", null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null},
-                {"Hora", null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null}
+                {"Ruta", null, null, null, null, null, null, null, null, null, null, null, null},
+                {"Hora", null, null, null, null, null, null, null, null, null, null, null, null}
             },
             new String [] {
-                "Día", "", "", "null", "null", "null", "null", "null", "null", "null", "null", "null", "null", "null", "null", "null", "null", "null", "null", "null", "null", "null", "null", "null", "null", "null", "null", "null", "null", "null", "null"
+                "Día", "", "", "null", "null", "null", "null", "null", "null", "null", "null", "null", "null"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.Object.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
+                java.lang.Object.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
             };
 
             public Class getColumnClass(int columnIndex) {
                 return types [columnIndex];
             }
         });
-        jScrollPane1.setViewportView(jTable1);
+        tablaDespacho.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_OFF);
+        jScrollPane1.setViewportView(tablaDespacho);
 
         jScrollPane2.setViewportView(jScrollPane1);
 
@@ -72,58 +113,125 @@ public class CreaciónPDespacho extends javax.swing.JFrame {
         ));
         jScrollPane3.setViewportView(jTable2);
 
-        jTable4.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
-            },
-            new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+        meses.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre" }));
+        meses.setBorder(null);
+        meses.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                mesesItemStateChanged(evt);
             }
-        ));
-        jScrollPane5.setViewportView(jTable4);
+        });
+
+        jButton1.setBackground(new java.awt.Color(0, 204, 255));
+        jButton1.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
+        jButton1.setForeground(new java.awt.Color(255, 255, 255));
+        jButton1.setText("Ver Planilla ");
+        jButton1.setBorder(null);
+        jButton1.setBorderPainted(false);
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane2)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(20, Short.MAX_VALUE)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 1127, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(17, 17, 17))
             .addGroup(layout.createSequentialGroup()
-                .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 705, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+                .addGap(413, 413, 413)
+                .addComponent(meses, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(49, 49, 49)
+                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(70, 70, 70)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 169, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap())))
+                .addGap(24, 24, 24)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(meses, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(43, 43, 43)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 313, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(141, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void mesesItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_mesesItemStateChanged
+        
+    }//GEN-LAST:event_mesesItemStateChanged
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        mes = meses.getSelectedIndex();
+        llenarTabla(mes);
+        System.err.println(mes);
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void llenarTabla(int mes){
+        cal.set(Calendar.MONTH, mes);  // mes del calendar febrero
+        cal.set(Calendar.DAY_OF_MONTH, 1);  // dia uno  del calendar
+        String[] a = new String[31];
+        int maxDay = cal.getActualMaximum(Calendar.DAY_OF_MONTH);
+        for (int i = 1; i <= maxDay; i++) {
+            cal.set(Calendar.DAY_OF_MONTH, i );
+            int diaSemana = cal.get(Calendar.DAY_OF_WEEK);
+            switch (diaSemana) {
+                case 1:                    
+                    a[i-1] = namesOfDays[1] + " "+ i;
+                    break;
+                case 2:
+                    a[i-1] = namesOfDays[2] + " "+ i;
+                    break;
+                case 3:
+                    a[i-1] = namesOfDays[3] + " "+ i;
+                    break;
+                case 4:
+                    a[i-1] = namesOfDays[4] + " "+ i;
+                    break;
+                case 5:
+                    a[i-1] = namesOfDays[5] + " "+ i;
+                    break;
+                case 6:
+                    a[i-1] = namesOfDays[6] + " "+ i;
+                    break;
+                case 7:
+                   a[i-1] = namesOfDays[7] + " "+ i;
+                    break;
+            }           
+        }
+        String[] fila = new String[a.length+1];
+        fila[0]="Día";
+        for (int i = 1; i < fila.length; i++) {
+            fila[i]= a[i-1];
+        }
+        Object[] d = new Object[fila.length];
+        d[0] = "RUTA";
+        for (int i = 1; i < d.length-1; i+=2) {
+            d[i] ="Ruta 1";
+            d[i+1] ="Ruta 2";
+        }
+        Object[] hora = new Object[fila.length];
+        hora[0] = "HORA";
+        DefaultTableModel model = new DefaultTableModel(new Object[0][0], fila);           
+        model.addRow(d);
+        model.addRow(hora);        
+        tablaDespacho.setModel(model);
+    
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton jButton1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
-    private javax.swing.JScrollPane jScrollPane4;
-    private javax.swing.JScrollPane jScrollPane5;
-    private javax.swing.JTable jTable1;
     private javax.swing.JTable jTable2;
-    private javax.swing.JTable jTable4;
+    private javax.swing.JComboBox<String> meses;
+    private javax.swing.JTable tablaDespacho;
     // End of variables declaration//GEN-END:variables
 }
