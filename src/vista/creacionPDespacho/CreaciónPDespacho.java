@@ -1,6 +1,7 @@
 package vista.creacionPDespacho;
 
 import java.text.SimpleDateFormat;
+import java.time.LocalTime;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.List;
@@ -21,6 +22,7 @@ public class CreaciónPDespacho extends javax.swing.JFrame {
     private EntityManager em;
     private EntityTransaction tx;
     List<Bus> busesLista;
+    int[] buses;
     
     public CreaciónPDespacho() {
         emf = Persistence.createEntityManagerFactory("TransvallePU");
@@ -30,32 +32,8 @@ public class CreaciónPDespacho extends javax.swing.JFrame {
         mes = 0;
         initComponents();                
         setLocationRelativeTo(null); // centrar ventana
-        llenarTabla(mes);  //llena tabla con dias del mes   
-        
-        int[] buses = new int[15];
-        buses[0] = 0;
-        busesLista = em.createNamedQuery("Bus.findAll").getResultList();
-         
-        for (int i = 1; i < 15; i++) {
-            buses[i] = Integer.parseInt(busesLista.get(i).getVial());
-        }
-        
-        
-        CrearPlanilla planilla = new CrearPlanilla();
-        int[][] mat = planilla.planillaDespacho(buses, ERROR, mes+1);
-       
-       int[][] copia = new int[mat[0].length][mat.length];  //14 filas y 31 columnas
-        
-        for (int i = 0; i < copia.length; i++) {
-            for (int j = 0; j < copia[i].length; j++) {
-                copia[i][j] = mat[j][i];
-                System.out.print(copia[i][j] + " ");                
-            }
-            System.out.print("\n");
-        }
-        
-        
-        
+        llenarTabla(mes);  //llena tabla con dias del mes        
+                
         
     }
 
@@ -173,6 +151,45 @@ public class CreaciónPDespacho extends javax.swing.JFrame {
         System.err.println(mes);
     }//GEN-LAST:event_jButton1ActionPerformed
 
+    private int[][] datosTabla(){
+        buses = new int[15];
+        buses[0] = 0;
+        busesLista = em.createNamedQuery("Bus.findAll").getResultList();
+         
+        for (int i = 1; i < 15; i++) {
+            buses[i] = Integer.parseInt(busesLista.get(i).getVial());
+        }
+        
+        
+        CrearPlanilla planilla = new CrearPlanilla();
+        int[][] mat = planilla.planillaDespacho(buses, ERROR, mes+1);
+       
+       int[][] copia = new int[mat[0].length][mat.length];  //14 filas y 31 columnas
+        
+        for (int i = 0; i < copia.length; i++) {
+            for (int j = 0; j < copia[i].length; j++) {
+                copia[i][j] = mat[j][i];
+                System.out.print(copia[i][j] + " ");                
+            }
+            System.out.print("\n");
+        }
+        
+        return copia;
+    }
+    private void addFilas(DefaultTableModel model, int[][] viales){
+        LocalTime hora = LocalTime.of(5, 0);
+        Object[] o = new Object[viales[0].length];
+        
+        for (int i = 1; i < 15; i++) {
+            hora = hora.plusMinutes(7);
+            o[0] = hora.toString();
+            for (int j = 1; j < o.length; j++) {
+                o[j] = viales[i][j];
+            }
+            model.addRow(o);
+        }
+    }
+    
     private void llenarTabla(int mes){
         cal.set(Calendar.MONTH, mes);  // mes del calendar febrero
         cal.set(Calendar.DAY_OF_MONTH, 1);  // dia uno  del calendar
@@ -222,6 +239,8 @@ public class CreaciónPDespacho extends javax.swing.JFrame {
         model.addRow(d);
         model.addRow(hora);        
         tablaDespacho.setModel(model);
+        
+        addFilas(model, datosTabla());
     
     }
 

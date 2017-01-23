@@ -6,7 +6,6 @@
 package model;
 
 import java.io.Serializable;
-import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -16,8 +15,6 @@ import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
@@ -31,9 +28,7 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Documento.findAll", query = "SELECT d FROM Documento d")
     , @NamedQuery(name = "Documento.findByIdDocumento", query = "SELECT d FROM Documento d WHERE d.idDocumento = :idDocumento")
     , @NamedQuery(name = "Documento.findByAseguradora", query = "SELECT d FROM Documento d WHERE d.aseguradora = :aseguradora")
-    , @NamedQuery(name = "Documento.findByNombre", query = "SELECT d FROM Documento d WHERE d.nombre = :nombre")
-    , @NamedQuery(name = "Documento.findByFechaExpiraci\u00f3n", query = "SELECT d FROM Documento d WHERE d.fechaExpiraci\u00f3n = :fechaExpiraci\u00f3n")
-    , @NamedQuery(name = "Documento.findByFechaExpedici\u00f3n", query = "SELECT d FROM Documento d WHERE d.fechaExpedici\u00f3n = :fechaExpedici\u00f3n")})
+    , @NamedQuery(name = "Documento.findByNombre", query = "SELECT d FROM Documento d WHERE d.nombre = :nombre")})
 public class Documento implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -46,12 +41,6 @@ public class Documento implements Serializable {
     private String aseguradora;
     @Column(name = "nombre")
     private String nombre;
-    @Column(name = "fechaExpiraci\u00f3n")
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date fechaExpiración;
-    @Column(name = "fechaExpedici\u00f3n")
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date fechaExpedición;
 
     public Documento() {
     }
@@ -82,22 +71,6 @@ public class Documento implements Serializable {
 
     public void setNombre(String nombre) {
         this.nombre = nombre;
-    }
-
-    public Date getFechaExpiración() {
-        return fechaExpiración;
-    }
-
-    public void setFechaExpiración(Date fechaExpiración) {
-        this.fechaExpiración = fechaExpiración;
-    }
-
-    public Date getFechaExpedición() {
-        return fechaExpedición;
-    }
-
-    public void setFechaExpedición(Date fechaExpedición) {
-        this.fechaExpedición = fechaExpedición;
     }
 
     @Override
