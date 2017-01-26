@@ -40,7 +40,7 @@ public class Gestionar_buses extends javax.swing.JFrame {
         initComponents();
         setLocationRelativeTo(null);  // centrar ventana
 
-        buses = em.createNamedQuery("Bus.findAll").getResultList();
+        buses = em.createNamedQuery("Bus.findAll").getResultList();    // consultar en la base de datos todos los buses y crear lista con los mismos
 
         Object[] columnNames = {"Vial", "Placa", "Modelo", "Clase", "Marca", "Capacidad", "No. Motor", "No. Chasis", "Fecha de Matricula", "Observaciones", "Estado", "Clase de servicio"};
         model = new DefaultTableModel(new Object[0][0], columnNames);

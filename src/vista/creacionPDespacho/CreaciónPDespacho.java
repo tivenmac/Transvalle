@@ -15,7 +15,7 @@ import planilla.CrearPlanilla;
 public class CreaciónPDespacho extends javax.swing.JFrame {
 
     int mes;
-    String[] namesOfDays = {"","Domingo","Lunes","Martes","Miercoles","Jueves","Viernes","Sabado"};
+    String[] namesOfDays = {"", "Domingo", "Lunes", "Martes", "Miercoles", "Jueves", "Viernes", "Sabado"};
     Calendar cal;
     private EntityManagerFactory emf;
     private EntityManager em;
@@ -24,25 +24,24 @@ public class CreaciónPDespacho extends javax.swing.JFrame {
     int[] buses;
     List<Ruta> rutas;
     String[] nombresRutas;
-    
+
     public CreaciónPDespacho() {
         emf = Persistence.createEntityManagerFactory("TransvallePU");
         em = emf.createEntityManager();
         tx = em.getTransaction();
         cal = Calendar.getInstance();
         mes = 0;
-        initComponents();                
+        initComponents();
         setLocationRelativeTo(null); // centrar ventana
         rutas = em.createNamedQuery("Ruta.findAll").getResultList();
         nombresRutas = new String[rutas.size() + 1];
-        nombresRutas[0]="";
+        nombresRutas[0] = "";
         for (int i = 1; i < nombresRutas.length; i++) {
-            nombresRutas[i] = rutas.get(i-1).getNombre();
+            nombresRutas[i] = rutas.get(i - 1).getNombre();
             System.out.println(nombresRutas[i]);
         }
         llenarTabla(mes, nombresRutas);  //llena tabla con dias del mes        
-                
-        
+
     }
 
     /**
@@ -150,7 +149,7 @@ public class CreaciónPDespacho extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void mesesItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_mesesItemStateChanged
-        
+
     }//GEN-LAST:event_mesesItemStateChanged
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
@@ -159,35 +158,35 @@ public class CreaciónPDespacho extends javax.swing.JFrame {
         System.err.println(mes);
     }//GEN-LAST:event_jButton1ActionPerformed
 
-    private int[][] datosTabla(){
+    private int[][] datosTabla() {
         buses = new int[15];
         buses[0] = 0;
         busesLista = em.createNamedQuery("Bus.findAll").getResultList();
-         
+
         for (int i = 1; i < 15; i++) {
             buses[i] = Integer.parseInt(busesLista.get(i).getVial());
         }
-        
-        
+
         CrearPlanilla planilla = new CrearPlanilla();
-        int[][] mat = planilla.planillaDespacho(buses, ERROR, mes+1);
-       
-       int[][] copia = new int[mat[0].length][mat.length];  //14 filas y 31 columnas
-        
+        int[][] mat = planilla.planillaDespacho(buses, ERROR, mes + 1);
+
+        int[][] copia = new int[mat[0].length][mat.length];  //14 filas y 31 columnas
+
         for (int i = 0; i < copia.length; i++) {
             for (int j = 0; j < copia[i].length; j++) {
                 copia[i][j] = mat[j][i];
-                System.out.print(copia[i][j] + " ");                
+                System.out.print(copia[i][j] + " ");
             }
             System.out.print("\n");
         }
-        
+
         return copia;
     }
-    private void addFilas(DefaultTableModel model, int[][] viales){
+
+    private void addFilas(DefaultTableModel model, int[][] viales) {
         LocalTime hora = LocalTime.of(5, 0);
         Object[] o = new Object[viales[0].length];
-        
+
         for (int i = 1; i < 15; i++) {
             hora = hora.plusMinutes(7);
             o[0] = hora.toString();
@@ -197,75 +196,71 @@ public class CreaciónPDespacho extends javax.swing.JFrame {
             model.addRow(o);
         }
     }
-    
-    private void llenarTabla(int mes, String[] nombresRutas){
+
+    private void llenarTabla(int mes, String[] nombresRutas) {
         cal.set(Calendar.MONTH, mes);  // mes del calendar febrero
         cal.set(Calendar.DAY_OF_MONTH, 1);  // dia uno  del calendar
         String[] a = new String[31];
         int maxDay = cal.getActualMaximum(Calendar.DAY_OF_MONTH);
         for (int i = 1; i <= maxDay; i++) {
-            cal.set(Calendar.DAY_OF_MONTH, i );
+            cal.set(Calendar.DAY_OF_MONTH, i);
             int diaSemana = cal.get(Calendar.DAY_OF_WEEK);
             switch (diaSemana) {
-                case 1:                    
-                    a[i-1] = namesOfDays[1] + " "+ i;
+                case 1:
+                    a[i - 1] = namesOfDays[1] + " " + i;
                     break;
                 case 2:
-                    a[i-1] = namesOfDays[2] + " "+ i;
+                    a[i - 1] = namesOfDays[2] + " " + i;
                     break;
                 case 3:
-                    a[i-1] = namesOfDays[3] + " "+ i;
+                    a[i - 1] = namesOfDays[3] + " " + i;
                     break;
                 case 4:
-                    a[i-1] = namesOfDays[4] + " "+ i;
+                    a[i - 1] = namesOfDays[4] + " " + i;
                     break;
                 case 5:
-                    a[i-1] = namesOfDays[5] + " "+ i;
+                    a[i - 1] = namesOfDays[5] + " " + i;
                     break;
                 case 6:
-                    a[i-1] = namesOfDays[6] + " "+ i;
+                    a[i - 1] = namesOfDays[6] + " " + i;
                     break;
                 case 7:
-                   a[i-1] = namesOfDays[7] + " "+ i;
+                    a[i - 1] = namesOfDays[7] + " " + i;
                     break;
-            }           
+            }
         }
-        String[] fila = new String[a.length+1];
-        fila[0]="Día";
+        String[] fila = new String[a.length + 1];  // fila dias
+        fila[0] = "Día";
         for (int i = 1; i < fila.length; i++) {
-            fila[i]= a[i-1];
+            fila[i] = a[i - 1];
         }
-        Object[] d = new Object[fila.length];
+
+        Object[] d = new Object[fila.length];  // fila rutas
         d[0] = "RUTA";
-        int i=0, j=1;
+        int i = 0, j = 1;
         do {
-if (j== nombresRutas.length) {
-             j=1;   
-            }            
-            
-d[i] = nombresRutas[j];
-i++;            
+            if (j == nombresRutas.length) {
+                j = 1;
+            }
+
+            d[i] = nombresRutas[j];
+            i++;
             j++;
-            if (i== d.length) {
+            if (i == d.length) {
                 i--;
             }
-            
-            
-            
+
         } while (d[i] == null);
-        
-        
-        
-        
+
         Object[] hora = new Object[fila.length];
         hora[0] = "HORA";       // la primera columna es hora
-        DefaultTableModel model = new DefaultTableModel(new Object[0][0], fila);           
+        DefaultTableModel model = new DefaultTableModel(new Object[0][0], fila);
         model.addRow(d);        // add fila al modelo de la tabla
-        model.addRow(hora);        
+        model.addRow(hora);
         tablaDespacho.setModel(model);
-        
+
         addFilas(model, datosTabla());
-    
+
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

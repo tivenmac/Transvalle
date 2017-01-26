@@ -14,6 +14,7 @@ import javax.persistence.Persistence;
 import javax.persistence.TypedQuery;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import model.Bus;
 import model.Persona;
 
 /**
@@ -27,6 +28,7 @@ public class GestionConductores extends javax.swing.JFrame {
     private EntityTransaction tx;
     List<Persona> lista;
     DefaultTableModel model;
+    List<Bus> buses;
 
     Object[] opcionesEliminarCond = {"Si, Eliminar Conductor", "No, Cancelar"};
 
@@ -44,6 +46,7 @@ public class GestionConductores extends javax.swing.JFrame {
         this.setLocationRelativeTo(null);
 
         lista = em.createNamedQuery("Persona.findAll").getResultList();
+        buses = em.createNamedQuery("Bus.findAll").getResultList();    // consultar en la base de datos todos los buses y crear lista con los mismos
 
         Object[] columnNames = {"No. Documento", "Nombre", "Apellidos", "Direccion", "Fecha de Nacimiento"};
         model = new DefaultTableModel(new Object[0][0], columnNames);
@@ -331,8 +334,8 @@ public class GestionConductores extends javax.swing.JFrame {
 
     private void btnCondIrARegNuevo1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCondIrARegNuevo1ActionPerformed
         RegistrarConductor registrar = new RegistrarConductor(emf, em, tx);  // ir a registrar conductor
-            registrar.setVisible(true);
-            this.setVisible(false);
+        registrar.setVisible(true);
+        this.setVisible(false);
     }//GEN-LAST:event_btnCondIrARegNuevo1ActionPerformed
 
     private void btnVerTodosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVerTodosActionPerformed
@@ -356,9 +359,37 @@ public class GestionConductores extends javax.swing.JFrame {
         // Asignar bus
         int row = tablaConductores.getSelectedRow();
         if (row != -1) {    //fila seleccionada
+            String[] viales = new String[buses.size()]; // array con todos los viales
+            for (int i = 0; i < buses.size(); i++) {
+                viales[i] = buses.get(i).getVial();
+            }
             Persona p = lista.get(row);
+
+            String vial = (String) JOptionPane.showInputDialog(this,
+                    "Asignar a " + p.getNombre() + "C.C. " + p.getCedula(),
+                    "Asignar bus",
+                    JOptionPane.QUESTION_MESSAGE,
+                    null,
+                    viales,
+                    viales[0]);
+
+            //Bus busAsignado = new Bus();
+            TypedQuery consultaBus = em.createNamedQuery("Bus.findByVial", Bus.class);
+            consultaBus.setParameter("vial", vial);
             
-            this.setVisible(false);
+            List<Bus> listaConsulta = consultaBus.getResultList();
+            for (Bus busAsignado : listaConsulta) {
+                //busAsignado.setPersona(p);
+                p.setBusidBus(busAsignado);
+                tx.begin();
+            em.merge(p);
+            tx.commit();
+                System.err.println(busAsignado.getIdBus());
+                JOptionPane.showMessageDialog(this, "Bus asignado exitosamente");
+            }
+
+            
+
         } else { // no se selecciono ninguna fila
             JOptionPane.showMessageDialog(this, "Debe Seleccionar un conductor para asignar bus.", "Ningun conductor seleccionado", JOptionPane.ERROR_MESSAGE);
         }
