@@ -52,7 +52,7 @@
                       <EmptySpace min="-2" pref="31" max="-2" attributes="0"/>
                       <Component id="btnGestBusIrAEliminarBus" min="-2" pref="118" max="-2" attributes="0"/>
                       <EmptySpace min="-2" pref="34" max="-2" attributes="0"/>
-                      <Component id="jButton1" min="-2" pref="116" max="-2" attributes="0"/>
+                      <Component id="btnImprimirBus" min="-2" pref="116" max="-2" attributes="0"/>
                       <EmptySpace pref="208" max="32767" attributes="0"/>
                       <Component id="btnGestBusIrARegistrarBus" min="-2" pref="125" max="-2" attributes="0"/>
                       <EmptySpace min="-2" pref="46" max="-2" attributes="0"/>
@@ -90,7 +90,7 @@
                   <Component id="btnGestBusIrAEditarBus" alignment="3" min="-2" pref="31" max="-2" attributes="0"/>
                   <Component id="btnGestBusSalir" alignment="3" min="-2" pref="31" max="-2" attributes="0"/>
                   <Component id="btnGestBusIrAEliminarBus" alignment="3" min="-2" pref="31" max="-2" attributes="0"/>
-                  <Component id="jButton1" alignment="3" min="-2" pref="31" max="-2" attributes="0"/>
+                  <Component id="btnImprimirBus" alignment="3" min="-2" pref="31" max="-2" attributes="0"/>
               </Group>
               <EmptySpace pref="43" max="32767" attributes="0"/>
           </Group>
@@ -358,7 +358,7 @@
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnGestBusIrAEliminarBusActionPerformed"/>
       </Events>
     </Component>
-    <Component class="javax.swing.JButton" name="jButton1">
+    <Component class="javax.swing.JButton" name="btnImprimirBus">
       <Properties>
         <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
           <Color blue="ff" green="cc" red="0" type="rgb"/>

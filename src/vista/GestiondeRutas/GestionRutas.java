@@ -26,9 +26,11 @@ public class GestionRutas extends javax.swing.JFrame {
      * Creates new form GestionRutas
      */
     public GestionRutas() {
-        emf = Persistence.createEntityManagerFactory("TransvallePU");
-        em = emf.createEntityManager();
-        tx = em.getTransaction();
+        if (emf == null) {
+            emf = Persistence.createEntityManagerFactory("TransvallePU");
+            em = emf.createEntityManager();
+            tx = em.getTransaction();
+        }
         initComponents();
         this.setLocationRelativeTo(null);        
         

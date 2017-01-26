@@ -13,8 +13,10 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -36,6 +38,10 @@ import javax.xml.bind.annotation.XmlRootElement;
     , @NamedQuery(name = "Persona.findByDirecci\u00f3n", query = "SELECT p FROM Persona p WHERE p.direcci\u00f3n = :direcci\u00f3n")
     , @NamedQuery(name = "Persona.findByFechaNacimiento", query = "SELECT p FROM Persona p WHERE p.fechaNacimiento = :fechaNacimiento")})
 public class Persona implements Serializable {
+
+    @JoinColumn(name = "bus_idBus", referencedColumnName = "idBus")
+    @OneToOne(optional = false)
+    private Bus busidBus;
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -139,6 +145,14 @@ public class Persona implements Serializable {
     @Override
     public String toString() {
         return "model.Persona[ idPersona=" + idPersona + " ]";
+    }
+
+    public Bus getBusidBus() {
+        return busidBus;
+    }
+
+    public void setBusidBus(Bus busidBus) {
+        this.busidBus = busidBus;
     }
     
 }

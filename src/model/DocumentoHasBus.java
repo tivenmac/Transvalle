@@ -8,11 +8,15 @@ package model;
 import java.io.Serializable;
 import java.util.Date;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
-import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -27,15 +31,16 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "DocumentoHasBus.findAll", query = "SELECT d FROM DocumentoHasBus d")
-    , @NamedQuery(name = "DocumentoHasBus.findByDocumentoidDocumento", query = "SELECT d FROM DocumentoHasBus d WHERE d.documentoHasBusPK.documentoidDocumento = :documentoidDocumento")
-    , @NamedQuery(name = "DocumentoHasBus.findByBusidBus", query = "SELECT d FROM DocumentoHasBus d WHERE d.documentoHasBusPK.busidBus = :busidBus")
+    , @NamedQuery(name = "DocumentoHasBus.findByDocumentoidDocumento", query = "SELECT d FROM DocumentoHasBus d WHERE d.documentoidDocumento = :documentoidDocumento")
     , @NamedQuery(name = "DocumentoHasBus.findByFechaExpedicion", query = "SELECT d FROM DocumentoHasBus d WHERE d.fechaExpedicion = :fechaExpedicion")
     , @NamedQuery(name = "DocumentoHasBus.findByFechaExpiracion", query = "SELECT d FROM DocumentoHasBus d WHERE d.fechaExpiracion = :fechaExpiracion")})
 public class DocumentoHasBus implements Serializable {
 
     private static final long serialVersionUID = 1L;
-    @EmbeddedId
-    protected DocumentoHasBusPK documentoHasBusPK;
+    @Id
+    @Basic(optional = false)
+    @Column(name = "Documento_idDocumento")
+    private Integer documentoidDocumento;
     @Basic(optional = false)
     @Column(name = "fechaExpedicion")
     @Temporal(TemporalType.DATE)
@@ -44,30 +49,31 @@ public class DocumentoHasBus implements Serializable {
     @Column(name = "fechaExpiracion")
     @Temporal(TemporalType.DATE)
     private Date fechaExpiracion;
+    @OneToOne(cascade = CascadeType.ALL, mappedBy = "documentohasbusDocumentoidDocumento")
+    private Documento documento;
+    @JoinColumn(name = "bus_idBus", referencedColumnName = "idBus")
+    @ManyToOne(optional = false)
+    private Bus busidBus;
 
     public DocumentoHasBus() {
     }
 
-    public DocumentoHasBus(DocumentoHasBusPK documentoHasBusPK) {
-        this.documentoHasBusPK = documentoHasBusPK;
+    public DocumentoHasBus(Integer documentoidDocumento) {
+        this.documentoidDocumento = documentoidDocumento;
     }
 
-    public DocumentoHasBus(DocumentoHasBusPK documentoHasBusPK, Date fechaExpedicion, Date fechaExpiracion) {
-        this.documentoHasBusPK = documentoHasBusPK;
+    public DocumentoHasBus(Integer documentoidDocumento, Date fechaExpedicion, Date fechaExpiracion) {
+        this.documentoidDocumento = documentoidDocumento;
         this.fechaExpedicion = fechaExpedicion;
         this.fechaExpiracion = fechaExpiracion;
     }
 
-    public DocumentoHasBus(int documentoidDocumento, int busidBus) {
-        this.documentoHasBusPK = new DocumentoHasBusPK(documentoidDocumento, busidBus);
+    public Integer getDocumentoidDocumento() {
+        return documentoidDocumento;
     }
 
-    public DocumentoHasBusPK getDocumentoHasBusPK() {
-        return documentoHasBusPK;
-    }
-
-    public void setDocumentoHasBusPK(DocumentoHasBusPK documentoHasBusPK) {
-        this.documentoHasBusPK = documentoHasBusPK;
+    public void setDocumentoidDocumento(Integer documentoidDocumento) {
+        this.documentoidDocumento = documentoidDocumento;
     }
 
     public Date getFechaExpedicion() {
@@ -86,10 +92,26 @@ public class DocumentoHasBus implements Serializable {
         this.fechaExpiracion = fechaExpiracion;
     }
 
+    public Documento getDocumento() {
+        return documento;
+    }
+
+    public void setDocumento(Documento documento) {
+        this.documento = documento;
+    }
+
+    public Bus getBusidBus() {
+        return busidBus;
+    }
+
+    public void setBusidBus(Bus busidBus) {
+        this.busidBus = busidBus;
+    }
+
     @Override
     public int hashCode() {
         int hash = 0;
-        hash += (documentoHasBusPK != null ? documentoHasBusPK.hashCode() : 0);
+        hash += (documentoidDocumento != null ? documentoidDocumento.hashCode() : 0);
         return hash;
     }
 
@@ -100,7 +122,7 @@ public class DocumentoHasBus implements Serializable {
             return false;
         }
         DocumentoHasBus other = (DocumentoHasBus) object;
-        if ((this.documentoHasBusPK == null && other.documentoHasBusPK != null) || (this.documentoHasBusPK != null && !this.documentoHasBusPK.equals(other.documentoHasBusPK))) {
+        if ((this.documentoidDocumento == null && other.documentoidDocumento != null) || (this.documentoidDocumento != null && !this.documentoidDocumento.equals(other.documentoidDocumento))) {
             return false;
         }
         return true;
@@ -108,7 +130,7 @@ public class DocumentoHasBus implements Serializable {
 
     @Override
     public String toString() {
-        return "model.DocumentoHasBus[ documentoHasBusPK=" + documentoHasBusPK + " ]";
+        return "model.DocumentoHasBus[ documentoidDocumento=" + documentoidDocumento + " ]";
     }
     
 }

@@ -1,8 +1,6 @@
 package vista.creacionPDespacho;
 
-import java.text.SimpleDateFormat;
 import java.time.LocalTime;
-import java.util.Arrays;
 import java.util.Calendar;
 import java.util.List;
 import javax.persistence.EntityManager;
@@ -11,6 +9,7 @@ import javax.persistence.EntityTransaction;
 import javax.persistence.Persistence;
 import javax.swing.table.DefaultTableModel;
 import model.Bus;
+import model.Ruta;
 import planilla.CrearPlanilla;
 
 public class CreaciónPDespacho extends javax.swing.JFrame {
@@ -23,6 +22,8 @@ public class CreaciónPDespacho extends javax.swing.JFrame {
     private EntityTransaction tx;
     List<Bus> busesLista;
     int[] buses;
+    List<Ruta> rutas;
+    String[] nombresRutas;
     
     public CreaciónPDespacho() {
         emf = Persistence.createEntityManagerFactory("TransvallePU");
@@ -32,7 +33,14 @@ public class CreaciónPDespacho extends javax.swing.JFrame {
         mes = 0;
         initComponents();                
         setLocationRelativeTo(null); // centrar ventana
-        llenarTabla(mes);  //llena tabla con dias del mes        
+        rutas = em.createNamedQuery("Ruta.findAll").getResultList();
+        nombresRutas = new String[rutas.size() + 1];
+        nombresRutas[0]="";
+        for (int i = 1; i < nombresRutas.length; i++) {
+            nombresRutas[i] = rutas.get(i-1).getNombre();
+            System.out.println(nombresRutas[i]);
+        }
+        llenarTabla(mes, nombresRutas);  //llena tabla con dias del mes        
                 
         
     }
@@ -147,7 +155,7 @@ public class CreaciónPDespacho extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         mes = meses.getSelectedIndex();
-        llenarTabla(mes);
+        llenarTabla(mes, nombresRutas);
         System.err.println(mes);
     }//GEN-LAST:event_jButton1ActionPerformed
 
@@ -190,7 +198,7 @@ public class CreaciónPDespacho extends javax.swing.JFrame {
         }
     }
     
-    private void llenarTabla(int mes){
+    private void llenarTabla(int mes, String[] nombresRutas){
         cal.set(Calendar.MONTH, mes);  // mes del calendar febrero
         cal.set(Calendar.DAY_OF_MONTH, 1);  // dia uno  del calendar
         String[] a = new String[31];
@@ -229,14 +237,30 @@ public class CreaciónPDespacho extends javax.swing.JFrame {
         }
         Object[] d = new Object[fila.length];
         d[0] = "RUTA";
-        for (int i = 1; i < d.length-1; i+=2) {
-            d[i] ="Ruta 1";
-            d[i+1] ="Ruta 2";
-        }
+        int i=0, j=1;
+        do {
+if (j== nombresRutas.length) {
+             j=1;   
+            }            
+            
+d[i] = nombresRutas[j];
+i++;            
+            j++;
+            if (i== d.length) {
+                i--;
+            }
+            
+            
+            
+        } while (d[i] == null);
+        
+        
+        
+        
         Object[] hora = new Object[fila.length];
-        hora[0] = "HORA";
+        hora[0] = "HORA";       // la primera columna es hora
         DefaultTableModel model = new DefaultTableModel(new Object[0][0], fila);           
-        model.addRow(d);
+        model.addRow(d);        // add fila al modelo de la tabla
         model.addRow(hora);        
         tablaDespacho.setModel(model);
         

@@ -34,9 +34,12 @@ public class GestionConductores extends javax.swing.JFrame {
      * Creates new form GestionConductores
      */
     public GestionConductores() {
-        emf = Persistence.createEntityManagerFactory("TransvallePU");
-        em = emf.createEntityManager();
-        tx = em.getTransaction();
+        if (emf == null) {
+            emf = Persistence.createEntityManagerFactory("TransvallePU");
+            em = emf.createEntityManager();
+            tx = em.getTransaction();
+        }
+
         initComponents();
         this.setLocationRelativeTo(null);
 
@@ -193,6 +196,11 @@ public class GestionConductores extends javax.swing.JFrame {
         jButton2.setBorder(null);
         jButton2.setBorderPainted(false);
         jButton2.setFocusPainted(false);
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
         getContentPane().add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 440, 130, 40));
 
         btnCondIrARegNuevo1.setBackground(new java.awt.Color(0, 204, 255));
@@ -322,7 +330,9 @@ public class GestionConductores extends javax.swing.JFrame {
     }//GEN-LAST:event_btnCondEditarActionPerformed
 
     private void btnCondIrARegNuevo1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCondIrARegNuevo1ActionPerformed
-
+        RegistrarConductor registrar = new RegistrarConductor(emf, em, tx);  // ir a registrar conductor
+            registrar.setVisible(true);
+            this.setVisible(false);
     }//GEN-LAST:event_btnCondIrARegNuevo1ActionPerformed
 
     private void btnVerTodosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVerTodosActionPerformed
@@ -341,6 +351,18 @@ public class GestionConductores extends javax.swing.JFrame {
         }
         tablaConductores.setModel(model);
     }//GEN-LAST:event_btnVerTodosActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        // Asignar bus
+        int row = tablaConductores.getSelectedRow();
+        if (row != -1) {    //fila seleccionada
+            Persona p = lista.get(row);
+            
+            this.setVisible(false);
+        } else { // no se selecciono ninguna fila
+            JOptionPane.showMessageDialog(this, "Debe Seleccionar un conductor para asignar bus.", "Ningun conductor seleccionado", JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_jButton2ActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

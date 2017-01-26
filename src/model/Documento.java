@@ -12,8 +12,10 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
 
@@ -41,6 +43,9 @@ public class Documento implements Serializable {
     private String aseguradora;
     @Column(name = "nombre")
     private String nombre;
+    @JoinColumn(name = "documento_has_bus_Documento_idDocumento", referencedColumnName = "Documento_idDocumento")
+    @OneToOne(optional = false)
+    private DocumentoHasBus documentohasbusDocumentoidDocumento;
 
     public Documento() {
     }
@@ -71,6 +76,14 @@ public class Documento implements Serializable {
 
     public void setNombre(String nombre) {
         this.nombre = nombre;
+    }
+
+    public DocumentoHasBus getDocumentohasbusDocumentoidDocumento() {
+        return documentohasbusDocumentoidDocumento;
+    }
+
+    public void setDocumentohasbusDocumentoidDocumento(DocumentoHasBus documentohasbusDocumentoidDocumento) {
+        this.documentohasbusDocumentoidDocumento = documentohasbusDocumentoidDocumento;
     }
 
     @Override

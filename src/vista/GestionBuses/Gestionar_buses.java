@@ -13,7 +13,6 @@ import javax.persistence.Persistence;
 import javax.persistence.TypedQuery;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableColumnModel;
 import model.Bus;
 
 /**
@@ -33,9 +32,11 @@ public class Gestionar_buses extends javax.swing.JFrame {
      * Creates new form Gestionar_buses
      */
     public Gestionar_buses() {
-        emf = Persistence.createEntityManagerFactory("TransvallePU");
-        em = emf.createEntityManager();
-        tx = em.getTransaction();
+        if (emf == null) {
+            emf = Persistence.createEntityManagerFactory("TransvallePU");
+            em = emf.createEntityManager();
+            tx = em.getTransaction();
+        }
         initComponents();
         setLocationRelativeTo(null);  // centrar ventana
 
@@ -59,7 +60,7 @@ public class Gestionar_buses extends javax.swing.JFrame {
             o[11] = bus.getClaseServicio();
             model.addRow(o);
         }
-        tabBusesListaDeBuses.setModel(model);              
+        tabBusesListaDeBuses.setModel(model);
     }
 
     /**
@@ -84,7 +85,7 @@ public class Gestionar_buses extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         tabBusesListaDeBuses = new javax.swing.JTable();
         btnGestBusIrAEliminarBus = new javax.swing.JButton();
-        jButton1 = new javax.swing.JButton();
+        btnImprimirBus = new javax.swing.JButton();
         btnVerTodos = new javax.swing.JButton();
 
         setTitle("Gestionar Buses");
@@ -208,13 +209,13 @@ public class Gestionar_buses extends javax.swing.JFrame {
             }
         });
 
-        jButton1.setBackground(new java.awt.Color(0, 204, 255));
-        jButton1.setForeground(new java.awt.Color(255, 255, 255));
-        jButton1.setText("Imprimir Bus");
-        jButton1.setBorder(null);
-        jButton1.setBorderPainted(false);
-        jButton1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        jButton1.setFocusPainted(false);
+        btnImprimirBus.setBackground(new java.awt.Color(0, 204, 255));
+        btnImprimirBus.setForeground(new java.awt.Color(255, 255, 255));
+        btnImprimirBus.setText("Imprimir Bus");
+        btnImprimirBus.setBorder(null);
+        btnImprimirBus.setBorderPainted(false);
+        btnImprimirBus.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnImprimirBus.setFocusPainted(false);
 
         btnVerTodos.setBackground(new java.awt.Color(0, 204, 255));
         btnVerTodos.setForeground(new java.awt.Color(255, 255, 255));
@@ -256,7 +257,7 @@ public class Gestionar_buses extends javax.swing.JFrame {
                         .addGap(31, 31, 31)
                         .addComponent(btnGestBusIrAEliminarBus, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(34, 34, 34)
-                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btnImprimirBus, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 208, Short.MAX_VALUE)
                         .addComponent(btnGestBusIrARegistrarBus, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(46, 46, 46)
@@ -288,7 +289,7 @@ public class Gestionar_buses extends javax.swing.JFrame {
                     .addComponent(btnGestBusIrAEditarBus, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnGestBusSalir, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnGestBusIrAEliminarBus, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(btnImprimirBus, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(43, Short.MAX_VALUE))
         );
 
@@ -312,7 +313,7 @@ public class Gestionar_buses extends javax.swing.JFrame {
     }//GEN-LAST:event_btnGestBusIrARegistrarBusActionPerformed
 
     private void btnGestBusIrAEliminarBusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGestBusIrAEliminarBusActionPerformed
-               int row = tabBusesListaDeBuses.getSelectedRow();
+        int row = tabBusesListaDeBuses.getSelectedRow();
 
         if (row != -1) {    //fila seleccionada
             Bus p = buses.get(row);
@@ -351,9 +352,9 @@ public class Gestionar_buses extends javax.swing.JFrame {
     }//GEN-LAST:event_btnGestBusIrAEditarBusActionPerformed
 
     private void btnVerTodosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVerTodosActionPerformed
+        model.setRowCount(0);
         buses = em.createNamedQuery("Bus.findAll").getResultList();
 
-        
         for (Bus bus : buses) {
             Object[] o = new Object[12];
             o[0] = bus.getVial();
@@ -373,7 +374,7 @@ public class Gestionar_buses extends javax.swing.JFrame {
     }//GEN-LAST:event_btnVerTodosActionPerformed
 
     private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
-        String s = (String)comboboxConsultaBus.getSelectedItem();
+        String s = (String) comboboxConsultaBus.getSelectedItem();
         if (txtBuscar.getText().isEmpty()) {
             JOptionPane.showMessageDialog(this, "Debe llenar el campo con un vial o numero de placa válido para buscar el bus.", "Falta vial o placa", JOptionPane.ERROR_MESSAGE);
 
@@ -391,21 +392,21 @@ public class Gestionar_buses extends javax.swing.JFrame {
             } else {
                 model.setRowCount(0);
                 for (Bus bus : buses) {
-            Object[] o = new Object[12];
-            o[0] = bus.getVial();
-            o[1] = bus.getPlaca();
-            o[2] = bus.getModelo();
-            o[3] = bus.getClase();
-            o[4] = bus.getMarca();
-            o[5] = bus.getCapacidad();
-            o[6] = bus.getNumeroMotor();
-            o[7] = bus.getNumeroChasis();
-            o[8] = bus.getFechaMatricula();
-            o[9] = bus.getObservaciones();
-            o[10] = bus.getEstado();
-            o[11] = bus.getClaseServicio();
-            model.addRow(o);
-        }
+                    Object[] o = new Object[12];
+                    o[0] = bus.getVial();
+                    o[1] = bus.getPlaca();
+                    o[2] = bus.getModelo();
+                    o[3] = bus.getClase();
+                    o[4] = bus.getMarca();
+                    o[5] = bus.getCapacidad();
+                    o[6] = bus.getNumeroMotor();
+                    o[7] = bus.getNumeroChasis();
+                    o[8] = bus.getFechaMatricula();
+                    o[9] = bus.getObservaciones();
+                    o[10] = bus.getEstado();
+                    o[11] = bus.getClaseServicio();
+                    model.addRow(o);
+                }
             }
         } else if (s.equals("Vial")) {
             String vial = txtBuscar.getText();
@@ -421,21 +422,21 @@ public class Gestionar_buses extends javax.swing.JFrame {
             } else {
                 model.setRowCount(0);
                 for (Bus bus : buses) {
-            Object[] o = new Object[12];
-            o[0] = bus.getVial();
-            o[1] = bus.getPlaca();
-            o[2] = bus.getModelo();
-            o[3] = bus.getClase();
-            o[4] = bus.getMarca();
-            o[5] = bus.getCapacidad();
-            o[6] = bus.getNumeroMotor();
-            o[7] = bus.getNumeroChasis();
-            o[8] = bus.getFechaMatricula();
-            o[9] = bus.getObservaciones();
-            o[10] = bus.getEstado();
-            o[11] = bus.getClaseServicio();
-            model.addRow(o);
-        }
+                    Object[] o = new Object[12];
+                    o[0] = bus.getVial();
+                    o[1] = bus.getPlaca();
+                    o[2] = bus.getModelo();
+                    o[3] = bus.getClase();
+                    o[4] = bus.getMarca();
+                    o[5] = bus.getCapacidad();
+                    o[6] = bus.getNumeroMotor();
+                    o[7] = bus.getNumeroChasis();
+                    o[8] = bus.getFechaMatricula();
+                    o[9] = bus.getObservaciones();
+                    o[10] = bus.getEstado();
+                    o[11] = bus.getClaseServicio();
+                    model.addRow(o);
+                }
             }
         }
     }//GEN-LAST:event_btnBuscarActionPerformed
@@ -448,9 +449,9 @@ public class Gestionar_buses extends javax.swing.JFrame {
     private javax.swing.JButton btnGestBusIrARegistrarBus;
     private javax.swing.JButton btnGestBusSalir;
     private javax.swing.JButton btnGestionBusesIrAVerDocumentos;
+    private javax.swing.JButton btnImprimirBus;
     private javax.swing.JButton btnVerTodos;
     private javax.swing.JComboBox<String> comboboxConsultaBus;
-    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JScrollPane jScrollPane1;
