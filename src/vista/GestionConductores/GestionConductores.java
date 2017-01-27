@@ -376,19 +376,17 @@ public class GestionConductores extends javax.swing.JFrame {
             //Bus busAsignado = new Bus();
             TypedQuery consultaBus = em.createNamedQuery("Bus.findByVial", Bus.class);
             consultaBus.setParameter("vial", vial);
-            
+
             List<Bus> listaConsulta = consultaBus.getResultList();
             for (Bus busAsignado : listaConsulta) {
                 //busAsignado.setPersona(p);
                 p.setBusidBus(busAsignado);
                 tx.begin();
-            em.merge(p);
-            tx.commit();
+                em.merge(p);
+                tx.commit();
                 System.err.println(busAsignado.getIdBus());
                 JOptionPane.showMessageDialog(this, "Bus asignado exitosamente");
             }
-
-            
 
         } else { // no se selecciono ninguna fila
             JOptionPane.showMessageDialog(this, "Debe Seleccionar un conductor para asignar bus.", "Ningun conductor seleccionado", JOptionPane.ERROR_MESSAGE);

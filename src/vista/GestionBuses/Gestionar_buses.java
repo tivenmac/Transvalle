@@ -332,9 +332,17 @@ public class Gestionar_buses extends javax.swing.JFrame {
 
     private void btnGestionBusesIrAVerDocumentosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGestionBusesIrAVerDocumentosActionPerformed
         // TODO add your handling code here:
-        DocumentosBus documentos = new DocumentosBus();
-        documentos.setVisible(true);
-        this.setVisible(false);
+        int row = tabBusesListaDeBuses.getSelectedRow();
+
+        if (row != -1) {    //fila seleccionada
+            Bus b = buses.get(row);
+            DocumentosBus documentos = new DocumentosBus(emf, em, tx, b);
+            documentos.setVisible(true);
+            this.setVisible(false);
+        } else { // no se selecciono ninguna fila
+            JOptionPane.showMessageDialog(this, "Debe Seleccionar un bus para ver documentos.", "Ningun bus seleccionado", JOptionPane.ERROR_MESSAGE);
+        }
+        
 
     }//GEN-LAST:event_btnGestionBusesIrAVerDocumentosActionPerformed
 
