@@ -6,6 +6,7 @@
 package vista.GestionBuses;
 
 import static java.awt.image.ImageObserver.WIDTH;
+import java.text.SimpleDateFormat;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -43,14 +44,17 @@ public class DocumentosBus extends javax.swing.JFrame {
 
         listaDocs = bus.getDocumentoHasBusList();
 
-        Object[] columnNames = {"Tipo", "Numero", "Fecha de Expedición", "Fecha de Expiración",};
+        Object[] columnNames = {"Tipo", "Numero", "Fecha de Expedición", "Fecha de Expiración"};
+        SimpleDateFormat formateador = new SimpleDateFormat("yy/MM/dd");
         model = new DefaultTableModel(new Object[0][0], columnNames);
         for (DocumentoHasBus listaDoc : listaDocs) {
             Object[] o = new Object[4];
+            
+
             o[0] = listaDoc.getDocumento().getNombre();
             o[1] = listaDoc.getDocumento().getIdDocumento();
-            o[2] = listaDoc.getFechaExpedicion();
-            o[3] = listaDoc.getFechaExpiracion();
+            o[2] = formateador.format(listaDoc.getFechaExpedicion());
+            o[3] = formateador.format(listaDoc.getFechaExpiracion());
             model.addRow(o);
         }
         tablaDocs.setModel(model);
@@ -186,18 +190,27 @@ public class DocumentosBus extends javax.swing.JFrame {
     }//GEN-LAST:event_btnGestBusSalirDocumentosActionPerformed
 
     private void btnGuardarCambiosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarCambiosActionPerformed
-        
+        int row = tablaDocs.getSelectedRow();
         if (txtFechaExpedicion.getDate() == null || txtFechaExpiracion.getDate() == null) {
                         JOptionPane.showMessageDialog(this, "Debe llenar todos los campos fechas para guardar cambios.", "Campos vacíos", JOptionPane.ERROR_MESSAGE);           
 
-        } 
-        
-        int n = JOptionPane.showOptionDialog(this, "Seguro desea guardar cambios?", "Guardar cambios", JOptionPane.YES_NO_CANCEL_OPTION, WIDTH, null, opcionesEliminarBus, opcionesEliminarBus[1]);
-        if (n == 0) {
-            // guardar cambios
+        } else if(row == -1){
+            JOptionPane.showMessageDialog(this, "Debe Seleccionar un documento para actualizar.", "Ningun documento seleccionado", JOptionPane.ERROR_MESSAGE);
+        }else {
+            DocumentoHasBus doc = listaDocs.get(row);
+            doc.setFechaExpedicion(txtFechaExpedicion.getDate());
+            doc.setFechaExpiracion(txtFechaExpiracion.getDate());
+            
+            tx.begin();
+            em.merge(doc);
+            tx.commit();
             JOptionPane.showMessageDialog(this, "Documento guardado exitosamente");
-
+            buses = new Gestionar_buses();
+            buses.setVisible(true);
+            this.setVisible(false);
         }
+        
+        
 // TODO add your handling code here:
     }//GEN-LAST:event_btnGuardarCambiosActionPerformed
 

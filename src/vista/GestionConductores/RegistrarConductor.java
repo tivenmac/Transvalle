@@ -205,9 +205,9 @@ public class RegistrarConductor extends javax.swing.JFrame {
         nuevoConductor.setNombre(txtCondRegisNuevoNombre.getText());
         nuevoConductor.setDirección(txtCondRegisNuevoDireccion.getText());
         nuevoConductor.setFechaNacimiento(txtCondRegisNuevoFecha.getDate());
-        tx.begin();
-        em.persist(nuevoConductor);
-        tx.commit();
+        tx.begin();                 //  comenzar nueva transaccion de recursos
+        em.persist(nuevoConductor); //almacena nuevas entidad en base de datos.
+        tx.commit();                // "commit changes" realizar cambios en la base de datos  
         JOptionPane.showMessageDialog(this, "Conductor creado exitosamente");
         GestionConductores gestion = new GestionConductores();
         this.setVisible(false);
